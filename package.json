@@ -1,0 +1,24 @@
+{
+  "name": "whenbus",
+  "version": "1.0.0",
+  "description": "CS3410 Course Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Girish-Raguvir/WhenBus.git"
+  },
+  "author": "Girish-Raguvir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Girish-Raguvir/WhenBus/issues"
+  },
+  "homepage": "https://github.com/Girish-Raguvir/WhenBus#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mongoose": "^4.8.6"
+  }
+}
