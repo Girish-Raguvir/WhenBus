@@ -1,0 +1,210 @@
+
+<!-- saved from url=(0055)file:///home/rahul/Documents/vim/wiki_html/WhenBus.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="Stylesheet" type="text/css" href="./WhenBus_files/style.css">
+	<link rel="shortcut icon" type="image/x-icon" href="http://www.vim.org/images/vim_shortcut.ico">
+    <title>WhenBus</title>
+    
+
+	<!-- Bootstrap or materialize -->
+	<!-- <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-S7YMK1xjUjSpEnF4P8hPUcgjXYLZKK3fQW1j5ObLSl787II9p8RO9XUGehRmKsxd" crossorigin="anonymous"> -->
+	<link href="./WhenBus_files/bootstrap-theme.min.css" rel="stylesheet">
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css"> -->
+
+	<!-- Roboto Font -->
+	<link href="./WhenBus_files/roboto.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="file:///home/rahul/Documents/vim/wiki_html/js//mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<!-- Code Prettify -->
+	<script async="" src="./WhenBus_files/code-prettify.js"></script>
+
+	<!-- Some CSS, for removing Code prettify borders -->
+	<style>
+
+
+		pre.prettyprint {
+			border: none !important;
+			padding : 0.3px !important;
+			color : white !important;
+			background-color: #222222 !important;
+		}
+
+		div > pre > p {
+			display : none !important;
+		}
+		div > pre > span {
+			display : none !important;
+		}
+
+		body {
+			font-family: Roboto Condensed, sans-serif !important; 
+		}
+
+	</style>
+<link rel="stylesheet" type="text/css" href="./WhenBus_files/prettify.css"></head>
+<body>
+
+	<nav class="navbar navbar-inverse">
+			<ul class="nav navbar-nav">
+				<li><a class="title" href="file:///home/rahul/Documents/vim/wiki_html/WhenBus.html#">Vim Wiki</a></li>
+				<li><a class="nav-item" href="file:///home/rahul/Documents/vim/wiki_html/index.html">Index</a></li>
+			</ul>
+		
+	</nav>
+
+
+    <div class="container">
+		
+<div id="Backend Endpoints"><h2 id="Backend Endpoints">Backend Endpoints</h2></div>
+
+<div id="Backend Endpoints-Register"><h4 id="Register">Register</h4></div>
+<ul>
+<li>
+Check if username already registed
+
+</li><li>
+Add value to database
+
+</li></ul>
+
+<p>
+Testcases
+</p>
+<ul>
+<li>
+User already exists
+
+</li><li>
+Multiple usernames 
+
+</li></ul>
+
+<div id="Backend Endpoints-Login"><h4 id="Login">Login</h4></div>
+<ul>
+<li>
+Check if credentials are fine
+
+</li><li>
+Give a tokenID to user/Login ID
+
+</li></ul>
+
+<p>
+Testcases
+</p>
+<ul>
+<li>
+Valid username password
+
+</li><li>
+Invalid Username
+
+</li><li>
+Invalid Password
+
+</li><li>
+Connection timed out
+
+</li></ul>
+
+<div id="Backend Endpoints-Query a Stop"><h4 id="Query a Stop">Query a Stop</h4></div>
+<ul>
+<li>
+Get GPS cordinates cordinates using GET request
+
+</li><li>
+Find the nearest bus stops using Database
+
+</li></ul>
+
+<p>
+Testcases
+</p>
+<ul>
+<li>
+Invalid GPS cordinates
+
+</li><li>
+Sample test cordinates, with answer
+
+</li><li>
+Lots of bus stops/ very few bus stops - test for both
+
+</li></ul>
+
+<div id="Backend Endpoints-Bus Query"><h4 id="Bus Query">Bus Query</h4></div>
+<ul>
+<li>
+Input is current GPS and destination GPS cordinates
+
+<ul>
+<li>
+Find bus stops close to source/dest
+
+</li><li>
+Find buses from source to dest
+
+</li><li>
+Find timings for all such buses
+
+</li></ul>
+</li></ul>
+
+<ul>
+<li>
+Alternately we can simply ask for bus no.
+
+<ul>
+<li>
+Reply is bus exists/no
+
+</li><li>
+Give bus timing from the heuristics
+
+</li><li>
+This is for specific bus
+
+</li></ul>
+</li></ul>
+
+<p>
+Testcases
+</p>
+<ul>
+<li>
+No bus in the route
+
+</li><li>
+Invalid/Valid bus no
+
+</li><li>
+One bus along route/ No bus along route
+
+</li><li>
+No timing info present timing info present
+
+</li></ul>
+
+<div id="Backend Endpoints-Bus Update"><h4 id="Bus Update">Bus Update</h4></div>
+<ul>
+<li>
+Frontend detects movement and sends data.
+
+</li><li>
+Backend receives data updates table.
+
+</li></ul>
+
+<p>
+Keep timeout for receiving data after bus query.
+</p>
+
+    </div>
+
+	<br>
+	<br>
+
+
+
+
+</body></html>
