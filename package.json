@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines:":{
+    "node": "4.2.6",
+    "npm": "3.5.2"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Girish-Raguvir/WhenBus.git"
@@ -19,6 +23,8 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
-    "mongoose": "^4.8.6"
+    "jsonwebtoken": "^7.3.0",
+    "mongoose": "^4.8.7",
+    "morgan": "^1.8.1"
   }
 }
