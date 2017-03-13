@@ -1,5 +1,5 @@
 var mongoose    =   require("mongoose");
-mongoose.connect('mongodb://localhost:27017/whenbus');
+
 var mongoSchema =   mongoose.Schema;
 var user_schema  = {
     "email" : String,
