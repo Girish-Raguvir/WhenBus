@@ -1,9 +1,6 @@
 var mongoose    =   require("mongoose");
 
-mongoose.connect(process.env.PROD_MONGODB, function (error) {
-    if (error) console.error(error);
-    else console.log('mongo connected');
-});
+mongoose.connect('mongodb://girishraguvir:qwerty@123@ds129030.mlab.com:29030/whenbus');
 
 var mongoSchema =   mongoose.Schema;
 var user_schema  = {
