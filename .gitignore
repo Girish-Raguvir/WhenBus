@@ -9,7 +9,6 @@
 *.class
 
 # Generated files
-bin/
 gen/
 out/
 
@@ -38,3 +37,5 @@ captures/
 
 # Keystore files
 *.jks
+
+node_modules/
