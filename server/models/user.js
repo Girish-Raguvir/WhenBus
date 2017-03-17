@@ -11,8 +11,10 @@ mongoose.connect('mongodb://girishraguvir:qwerty@ds129030.mlab.com:29030/whenbus
 
 var mongoSchema =   mongoose.Schema;
 var user_schema  = {
+    "name" : String,
     "email" : String,
-    "password" : String
+    "password_hash" : String,
+    "password_salt" : String
 };
 
 module.exports = mongoose.model('user_login',user_schema);;
