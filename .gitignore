@@ -45,3 +45,5 @@ captures/
 npm-debug.log
 .DS_Store
 /*.env
+
+Backend/node_modules
