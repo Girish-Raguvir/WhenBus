@@ -1,30 +1,56 @@
-var route_model = require("../models/bus.js")
+var route_model = require("../models/route.js")
 var mongoose = require("mongoose")
 
 // Clear the collection for bus stops
 route_model.remove({ }, function(err) {
     if (!err) {
-		console.log("cleared buses successfully")
+		console.log("cleared routes successfully")
     }
     else {
-		console.log("Error occured when clearing buses database")
+		console.log("Error occured when clearing routes database")
     }
 });
 
 // Populate the Bus Stops collection
 routes = []
 
-buses.push(new bus_model ({
-    bus_no : "IITM1",
-    start_stop_id : "1",
-    end_stop_id : "15",
-}));
+var i
+for(i=1; i<=15; i++){
+	routes.push(new route_model ({
+		bus_stop : String(i),
+		bus_no : "IITM1",
+		stop_no : i
+	}));
+}
 
+for(i=1; i<=6; i++){
+	routes.push(new route_model ({
+		bus_stop : String(i),
+		bus_no : "IITM2",
+		stop_no : i
+	}));
+}
 
-buses.forEach(function(bus_element){
-	bus_element.save(function (err, bus_element) {
+for(i=1; i<=15; i++){
+	routes.push(new route_model ({
+		bus_stop : String(i),
+		bus_no : "IITM3",
+		stop_no : 16-i
+	}));
+}
+
+for(i=1; i<=6; i++){
+	routes.push(new route_model ({
+		bus_stop : String(i),
+		bus_no : "IITM4",
+		stop_no : 7 -i
+	}));
+}
+
+routes.forEach(function(route_element){
+	route_element.save(function (err, route_element) {
 	  if (err) return console.error(err);
-		console.log("Saved bus id : " +  bus_element.bus_no +  " to db")
+		console.log("Saved (bus no, stop no) : (" +  route_element.bus_no + ", " + route_element.stop_no +  ") to db")
 	});
 });
 
