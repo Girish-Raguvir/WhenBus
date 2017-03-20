@@ -1,4 +1,4 @@
-var api_error_messages = function () {};
+var api_error_messages = function() {};
 
 api_error_messages.email_not_found = 0;
 api_error_messages.invalid_password = 1;

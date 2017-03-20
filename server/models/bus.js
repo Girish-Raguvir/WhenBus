@@ -1,4 +1,4 @@
-var mongoose    =   require("mongoose");
+var mongoose = require("mongoose");
 
 mongoose.connect('mongodb://girishraguvir:qwerty@ds129030.mlab.com:29030/whenbus')
 
@@ -9,11 +9,11 @@ mongoose.connect('mongodb://girishraguvir:qwerty@ds129030.mlab.com:29030/whenbus
 //     else console.log('mongo connected');
 // });
 
-var mongoSchema =   mongoose.Schema;
-var bus  = {
-    "bus_no" : String,
-    "start_stop_id" : String,
-    "end_stop_id" : String,
+var mongoSchema = mongoose.Schema;
+var bus = {
+	"bus_no": String,
+	"start_stop_id": String,
+	"end_stop_id": String,
 };
 
-module.exports = mongoose.model('buses',bus);;
+module.exports = mongoose.model('buses', bus);;
