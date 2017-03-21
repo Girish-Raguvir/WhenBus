@@ -2,7 +2,7 @@
 
 Register:
 ---------
-* Recv : email/password 
+* Recv : email/password
 * Return : success, failed, user already exists
 
 Login:
@@ -10,14 +10,14 @@ Login:
 * Recv : username, password
 * Return : user token for transactions
 
-Logout : 
+Logout :
 --------
 * Recv : Logout, user token
 * Return : Sucess/Failure
 
 BusStop :
 ---------
-* Recv : 
+* Recv :
 	* GPS Co-ord, userToken (Frontend gives cur gps or gps of another location)
 	* Map location, userToken(backend converts to GPS)(alternately)
 * Return : GPS,name of nearest bus stop(s)
@@ -27,8 +27,8 @@ BusQuery :
 * Recv : Query Type(bus no query,  GPS query, userToken )
 	* Bus no., direction(final dest.), time?
 	* Start GPS and End GPS coords, time?(alternately)
-* Return : 
-	* tuples of (BusNo.,arrival time) or (BusNo., location) via specified start, end 
+* Return :
+	* tuples of (BusNo.,arrival time) or (BusNo., location) via specified start, end
 	* If no bus there indicate the same
 
 Update :

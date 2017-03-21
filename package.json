@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "engines:":{
+  "engines:": {
     "node": "4.2.6",
     "npm": "3.5.2"
   },
@@ -25,6 +25,7 @@
     "express": "^4.15.2",
     "jsonwebtoken": "^7.3.0",
     "mongoose": "^4.8.7",
-    "morgan": "^1.8.1"
+    "morgan": "^1.8.1",
+    "node-uuid": "^1.4.7"
   }
 }
