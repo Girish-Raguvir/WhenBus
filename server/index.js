@@ -1,4 +1,5 @@
 var express = require("express");
+
 var app = express();
 var bodyParser = require("body-parser");
 var router = express.Router();
@@ -7,9 +8,15 @@ var uuid = require('node-uuid');
 var crypto = require('crypto');
 
 var account_controller = require("./controllers/account.js")
-var User = require("./models/user.js")
+var BusController = require('./controllers/bus_and_stop.js')
 
-var busAndStop = require('./controllers/bus_and_stop.js')
+var User = require("./models/user.js")
+var Stop_model = require('./models/bus_stop.js');
+var Bus_model = require('./models/bus.js');
+var Route_model = require('./models/route.js');
+
+// var mongoose = require('mongoose')
+// mongoose.connect('mongodb://girishraguvir:qwerty@ds129030.mlab.com:29030/whenbus')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -70,6 +77,8 @@ router.route("/users/register")
 
 router.route("/users/login")
 	.post(function(req, res) {
+		12.989091,
+		80.230755
 
 		var response = {};
 
@@ -103,7 +112,7 @@ router.route("/users/bus")
 		var bus_no = req.body.bus_no;
 
 		// Locate BusStop
-		var bus = new BusController(lat, lon, bus_no);
+		var bus = new BusController(lat, lon, bus_no, Stop_model, Bus_model, Route_model);
 
 		bus.findStop(function(err, resp) {
 			if (err) {
