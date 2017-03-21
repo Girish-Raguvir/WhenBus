@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-mongoose.connect('mongodb://girishraguvir:qwerty@ds129030.mlab.com:29030/whenbus')
+// mongoose.connect('mongodb://girishraguvir:qwerty@ds129030.mlab.com:29030/whenbus')
 
 // To be used during deployment
 
