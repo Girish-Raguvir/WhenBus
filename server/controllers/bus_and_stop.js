@@ -1,7 +1,7 @@
 var BusController = function(lat, lon, bus_no, stop_model, bus_model, route_model) {
 	this.lat = lat;
 	this.lat = lat;
-	this.bus_no = bus_no.toLowerCase();
+	this.bus_no = bus_no.toUpperCase();
 	this.stop_model = stop_model;
 	this.bus_model = bus_model;
 	this.route_model = route_model;
@@ -21,7 +21,7 @@ BusController.prototype.getDistanceFromLatLon = function(lat1, lon1) {
 }
 
 BusController.prototype.deg2rad = function(deg) {
-	return deg * (Math.PI / 180)
+	return deg * (Math.PI / 180);
 }
 
 BusController.prototype.findStop = function(callback) {
