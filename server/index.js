@@ -9,6 +9,8 @@ var crypto = require('crypto');
 var account_controller = require("./controllers/account.js")
 var User = require("./models/user.js")
 
+var busAndStop = require('./controllers/bus_and_stop.js')
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	"extended": false
@@ -77,6 +79,33 @@ router.route("/users/login")
 		var account = new account_controller(User, {});
 
 		account.login(email, password, function(err, resp) {
+			if (err) {
+				response = {
+					"success": false,
+					"message": "Error logging in"
+				};
+			} else {
+				response = {
+					"success": resp.success,
+					"message": resp.payload
+				};
+			}
+			res.json(response);
+		});
+	});
+
+router.route("/users/bus")
+	.post(function(req, res) {
+		var response = {};
+
+		var lon = req.body.gps_lat;
+		var lat = req.body.gps_lon;
+		var bus_no = req.body.bus_no;
+
+		// Locate BusStop
+		var bus = new BusController(lat, lon, bus_no);
+
+		bus.findStop(function(err, resp) {
 			if (err) {
 				response = {
 					"success": false,

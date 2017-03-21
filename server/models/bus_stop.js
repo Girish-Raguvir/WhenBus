@@ -13,8 +13,8 @@ var mongoSchema = mongoose.Schema;
 var bus_stop = {
 	"stop_id": String,
 	"stop_name": String,
-	"gps_x": Number,
-	"gps_y": Number
+	"gps_lat": Number,
+	"gps_lon": Number
 };
 
 module.exports = mongoose.model('bus_stops', bus_stop);;
