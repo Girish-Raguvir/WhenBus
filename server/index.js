@@ -15,8 +15,8 @@ var Stop_model = require('./models/bus_stop.js');
 var Bus_model = require('./models/bus.js');
 var Route_model = require('./models/route.js');
 
-// var mongoose = require('mongoose')
-// mongoose.connect('mongodb://girishraguvir:qwerty@ds129030.mlab.com:29030/whenbus')
+var mongoose = require('mongoose')
+mongoose.connect('mongodb://girishraguvir:qwerty@ds129030.mlab.com:29030/whenbus')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -77,8 +77,6 @@ router.route("/users/register")
 
 router.route("/users/login")
 	.post(function(req, res) {
-		12.989091,
-		80.230755
 
 		var response = {};
 
