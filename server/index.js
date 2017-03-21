@@ -101,7 +101,7 @@ router.route("/users/login")
 		});
 	});
 
-router.route("/users/bus")
+router.route("/bus")
 	.post(function(req, res) {
 		var response = {};
 
