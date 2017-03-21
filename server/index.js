@@ -105,8 +105,8 @@ router.route("/bus")
 	.post(function(req, res) {
 		var response = {};
 
-		var lon = req.body.gps_lat;
-		var lat = req.body.gps_lon;
+		var lon = req.body.gps_lon;
+		var lat = req.body.gps_lat;
 		var bus_no = req.body.bus_no;
 
 		// Locate BusStop
