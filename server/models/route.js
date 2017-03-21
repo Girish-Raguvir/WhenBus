@@ -14,6 +14,7 @@ var route = {
 	"bus_stop": String,
 	"bus_no": String,
 	"stop_no": Number,
+	"timings": Array
 };
 
 module.exports = mongoose.model('routes', route);;
