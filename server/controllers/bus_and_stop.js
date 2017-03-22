@@ -1,3 +1,13 @@
+/**
+ * Represents bus and has operations related to finding nearest bus Stop and estimated arrival time
+ * @constructor
+ * @param {Number} lat - The latitude of the user
+ * @param {Number} lon - The longitude of the user
+ * @param {String} bus_no - The bus number that the user want to query for
+ * @param {Object} stop_model - The schema of the stop database in Mongoose
+ * @param {Object} bus_model - The schema of the stop database in Mongoose
+ * @param {Object} route_model - The schema of the stop database in Mongoose
+ */
 var BusController = function(lat, lon, bus_no, stop_model, bus_model, route_model) {
 	this.lat = lat;
 	this.lon = lon;
@@ -7,6 +17,10 @@ var BusController = function(lat, lon, bus_no, stop_model, bus_model, route_mode
 	this.route_model = route_model;
 };
 
+/**
+ * Calculates in Km, the distance of an given bus stop, to the co-ordinates of the user
+ * @param {Object} stop - A collection(element) from the stop database for which we calculate distance from User coordinates
+ */
 BusController.prototype.getDistanceFromLatLon = function(stop) {
 	var R = 6371; // Radius of the earth in km
 	var dLat = this.deg2rad(this.lat - stop.gps_lat);
@@ -20,10 +34,19 @@ BusController.prototype.getDistanceFromLatLon = function(stop) {
 	return d;
 }
 
+/**
+ * Convert degrees to radians
+ * @param {Number} deg - Angle in degrees
+ */
 BusController.prototype.deg2rad = function(deg) {
 	return deg * (Math.PI / 180);
 }
 
+/**
+ * Finds the bus stop closest to the user co-ordinates that also has requested bus passing through it
+ * @param {Array} allstops - An array of stops(from the database) 
+ * @param {Array} callback - Callback function to execute(which returns a response) after closest stop is found
+ */
 BusController.prototype.findMin = function(allstops, callback) {
 	var me = this;
 
@@ -87,6 +110,10 @@ BusController.prototype.findMin = function(allstops, callback) {
 
 }
 
+/**
+ * Checks if bus requested is valid, and finds the bus stop closest to to the user via which requested bus passes through
+ * @param {Array} callback - Callback function to execute(which returns a response) after closest stop is found
+ */
 BusController.prototype.findStop = function(callback) {
 	var me = this;
 
