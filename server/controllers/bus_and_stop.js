@@ -15,6 +15,7 @@ var BusController = function(lat, lon, bus_no, stop_model, bus_model, route_mode
 	this.stop_model = stop_model;
 	this.bus_model = bus_model;
 	this.route_model = route_model;
+	this.api_error_messages = require('../models/api_error_messages.js');
 };
 
 /**
@@ -51,9 +52,8 @@ BusController.prototype.findMin = function(allstops, callback) {
 	var me = this;
 
 	var num_stops = allstops.length;
-	console.log(num_stops);
+	// Find the minimum by iterating
 	var min_stop = allstops.reduce(function(min, s) {
-		console.log(min.counter);
 
 		me.route_model.findOne({
 			bus_no: me.bus_no,
@@ -63,10 +63,11 @@ BusController.prototype.findMin = function(allstops, callback) {
 				return callback(err2, {
 					success: false,
 					payload: {
-						msg: "Database error occured"
+						msg: api_error_messages.database_error
 					}
 				});
 			} else if (route) {
+				// update minima
 				var cur_dist = me.getDistanceFromLatLon(s);
 				if (min.d > cur_dist) {
 					min.d = cur_dist;
@@ -75,21 +76,19 @@ BusController.prototype.findMin = function(allstops, callback) {
 			}
 			min.counter = min.counter + 1;
 
-			console.log(min);
+			// if all stops processed then return minima if it exists
 			if (num_stops == min.counter) {
-				console.log(min.counter);
 				if (min.d == Infinity) {
 					return callback(0, {
 						success: false,
 						payload: {
-							msg: "No nearby bus stops through which requested bus passes through"
+							msg: api_error_messages.no_nearby_stop
 						}
 					});
 				} else {
 					return callback(0, {
 						success: true,
 						payload: {
-							msg: "Success",
 							gps_lat: min.stp.gps_lat,
 							gps_lon: min.stp.gps_lon,
 							stop_name: min.stp.stop_name,
@@ -125,15 +124,16 @@ BusController.prototype.findStop = function(callback) {
 			return callback(err, {
 				success: false,
 				payload: {
-					msg: "Database error occured"
+					msg: api_error_messages.database_error
 				}
 			});
 		}
 		if (!bus) {
+			// Bus does not exist
 			return callback(err, {
 				success: false,
 				payload: {
-					msg: "Bus No. does not exist in the database."
+					msg: api_error_messages.bus_not_found
 				}
 			});
 		} else {
@@ -143,7 +143,7 @@ BusController.prototype.findStop = function(callback) {
 					return callback(err1, {
 						success: false,
 						payload: {
-							msg: "Database error occured"
+							msg: api_error_messages.database_error
 						}
 					});
 				} else {
