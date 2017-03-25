@@ -102,6 +102,10 @@ for (i = 1; i <= 6; i++) {
 	}));
 }
 
+// Open connections
+var mongoose = require('mongoose')
+mongoose.connect('mongodb://girishraguvir:qwerty@ds129030.mlab.com:29030/whenbus')
+
 // Add all elements to collection via 'save'
 routes.forEach(function(route_element) {
 	route_element.save(function(err, route_element) {

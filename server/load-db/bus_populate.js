@@ -42,6 +42,10 @@ buses.push(new bus_model({
 	end_stop_id: "1",
 }));
 
+// Open connections
+var mongoose = require('mongoose')
+mongoose.connect('mongodb://girishraguvir:qwerty@ds129030.mlab.com:29030/whenbus')
+
 // Add all elements to collection via 'save'
 buses.forEach(function(bus_element) {
 	bus_element.save(function(err, bus_element) {

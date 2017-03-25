@@ -63,7 +63,7 @@ BusController.prototype.findMin = function(allstops, callback) {
 				return callback(err2, {
 					success: false,
 					payload: {
-						msg: api_error_messages.database_error
+						msg: me.api_error_messages.database_error
 					}
 				});
 			} else if (route) {
@@ -82,7 +82,7 @@ BusController.prototype.findMin = function(allstops, callback) {
 					return callback(0, {
 						success: false,
 						payload: {
-							msg: api_error_messages.no_nearby_stop
+							msg: me.api_error_messages.no_nearby_stop
 						}
 					});
 				} else {
@@ -124,7 +124,7 @@ BusController.prototype.findStop = function(callback) {
 			return callback(err, {
 				success: false,
 				payload: {
-					msg: api_error_messages.database_error
+					msg: me.api_error_messages.database_error
 				}
 			});
 		}
@@ -133,7 +133,7 @@ BusController.prototype.findStop = function(callback) {
 			return callback(err, {
 				success: false,
 				payload: {
-					msg: api_error_messages.bus_not_found
+					msg: me.api_error_messages.bus_not_found
 				}
 			});
 		} else {
@@ -143,7 +143,7 @@ BusController.prototype.findStop = function(callback) {
 					return callback(err1, {
 						success: false,
 						payload: {
-							msg: api_error_messages.database_error
+							msg: me.api_error_messages.database_error
 						}
 					});
 				} else {

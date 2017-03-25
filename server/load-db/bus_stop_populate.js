@@ -125,6 +125,10 @@ stps.push(new stop_model({
 	gps_lon: 80.242512
 }));
 
+// Open connections
+var mongoose = require('mongoose')
+mongoose.connect('mongodb://girishraguvir:qwerty@ds129030.mlab.com:29030/whenbus')
+
 // Add all elements to collection via 'save'
 stps.forEach(function(stp) {
 	stp.save(function(err, stp) {
