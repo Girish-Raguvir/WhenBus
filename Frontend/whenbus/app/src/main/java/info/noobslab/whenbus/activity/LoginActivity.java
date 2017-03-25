@@ -1,7 +1,5 @@
 /**
- * Author: Ravi Tamada
- * URL: www.androidhive.info
- * twitter: http://twitter.com/ravitamada
+ * Author: seshagirirao
  */
 package info.noobslab.whenbus.activity;
 
@@ -114,7 +112,7 @@ public class LoginActivity extends Activity {
         pDialog.setMessage("Logging in ...");
         showDialog();
 
-        StringRequest strReq = new StringRequest(Method.GET,
+        StringRequest strReq = new StringRequest(Method.POST,
                 AppConfig.URL_LOGIN, new Response.Listener<String>() {
 
             @Override
@@ -124,7 +122,7 @@ public class LoginActivity extends Activity {
 
                 try {
                     JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
+                    boolean error = jObj.getBoolean("success");
 
                     // Check for error node in json
                     if (!error) {
@@ -135,11 +133,13 @@ public class LoginActivity extends Activity {
                         // Now store the user in SQLite
                         String uid = "testuid";//jObj.getString("uid");
 
-//                        JSONObject user = "testuser";//jObj.getJSONObject("user");
-                        String name = "testname";//user.getString("name");
-                        String email = "testmail";//user.getString("email");
-//                        String created_at = user
-//                                .getString("created_at");
+                        JSONObject message = jObj.getJSONObject("message");
+//                        JSONObject user_profile = message.getJSONObject("user_profile");
+////                        JSONObject user = "testuser";//jObj.getJSONObject("user");
+//                        String name = user_profile.getString("name");
+//                        String email = user_profile.getString("email");
+//                        String created_at = "now";
+////                                .getString("created_at");
 
                         // Inserting row in users table
 //                        db.addUser(name, email, uid, created_at);

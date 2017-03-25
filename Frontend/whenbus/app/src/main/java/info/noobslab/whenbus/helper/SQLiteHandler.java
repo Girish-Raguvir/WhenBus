@@ -1,7 +1,5 @@
 /**
- * Author: Ravi Tamada
- * URL: www.androidhive.info
- * twitter: http://twitter.com/ravitamada
+ * Author: seshagirirao
  * */
 package info.noobslab.whenbus.helper;
 
@@ -23,7 +21,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
 
 	// Database Name
-	private static final String DATABASE_NAME = "android_api";
+	private static final String DATABASE_NAME = "whenbus_api";
 
 	// Login table name
 	private static final String TABLE_USER = "user";

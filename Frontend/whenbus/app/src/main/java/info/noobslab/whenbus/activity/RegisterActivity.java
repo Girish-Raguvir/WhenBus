@@ -1,7 +1,7 @@
 /**
- * Author: Ravi Tamada
- * URL: www.androidhive.info
- * twitter: http://twitter.com/ravitamada
+ * Author: seshagirirao
+
+
  */
 package info.noobslab.whenbus.activity;
 
@@ -125,20 +125,21 @@ public class RegisterActivity extends Activity {
 
                 try {
                     JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
+                    boolean error = jObj.getBoolean("success");
                     if (!error) {
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
                         String uid = "testuid";//jObj.getString("uid");
 
-//                        JSONObject user = jObj.getJSONObject("user");
-                        String name = "testuser";//user.getString("name");
-                        String email = "testmail";//user.getString("email");
-//                        String created_at = user
+                        JSONObject message = jObj.getJSONObject("message");
+                        JSONObject user_profile = message.getJSONObject("user_profile");
+                        String name = user_profile.getString("name");
+                        String email = user_profile.getString("email");
+                        String created_at = "now";
 //                                .getString("created_at");
 
                         // Inserting row in users table
-//                        db.addUser(name, email, uid, created_at);
+                        db.addUser(name, email, uid, created_at);
 
                         Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
@@ -152,7 +153,7 @@ public class RegisterActivity extends Activity {
 
                         // Error occurred in registration. Get the error
                         // message
-                        String errorMsg = jObj.getString("error_msg");
+                        String errorMsg = jObj.getString("message");
                         Toast.makeText(getApplicationContext(),
                                 errorMsg, Toast.LENGTH_LONG).show();
                     }
