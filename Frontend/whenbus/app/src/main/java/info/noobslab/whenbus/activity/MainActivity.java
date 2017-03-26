@@ -1,5 +1,7 @@
 package info.noobslab.whenbus.activity;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,10 +11,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -354,6 +358,34 @@ public class MainActivity extends AppCompatActivity {
         // show menu only when home fragment is selected
         if (navItemIndex == 0) {
             getMenuInflater().inflate(R.menu.main, menu);
+            // Retrieve the SearchView and plug it into SearchManager
+            final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+            SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+//            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(
+                    new ComponentName(getApplicationContext(),
+                        SearchResultsActivity.class)));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    callSearch(query);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+//              if (searchView.isExpanded() && TextUtils.isEmpty(newText)) {
+//                    callSearch(newText);
+//              }
+                    return true;
+                }
+
+                public void callSearch(String query) {
+                    Toast.makeText(getApplicationContext(), "Searched "+query, Toast.LENGTH_LONG).show();
+                    //Do searching
+                }
+
+            });
         }
 
         // when fragment is notifications, load the menu created for notifications
