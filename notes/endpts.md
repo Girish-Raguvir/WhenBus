@@ -22,7 +22,7 @@ BusStop :
 	* Map location, userToken(backend converts to GPS)(alternately)
 * Return : GPS,name of nearest bus stop(s)
 
-BusQuery :
+BusQuery :(GET)
 -----------
 * Recv : Query Type(bus no query,  GPS query, userToken )
 	* Bus no., direction(final dest.), time?
@@ -31,7 +31,7 @@ BusQuery :
 	* tuples of (BusNo.,arrival time) or (BusNo., location) via specified start, end
 	* If no bus there indicate the same
 
-Update :
+Update :(POST)
 --------
 * Recv : Bus No., Direction, Timestamp, Cur user GPS, userToken
 * Return : Sucess, Update Mongo
