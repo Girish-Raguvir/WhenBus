@@ -15,4 +15,4 @@ var route = {
 	"timings": Array
 };
 
-module.exports = mongoose.model('routes', route);;
+module.exports = mongoose.model('routes', route);
