@@ -19,25 +19,25 @@ bus_model.remove({}, function(err) {
 
 // Add each element one by one
 buses.push(new bus_model({
-	bus_no: "IITM1",
+	bus_no: "IITM1_f",
 	start_stop_id: "1",
 	end_stop_id: "15",
 }));
 
 buses.push(new bus_model({
-	bus_no: "IITM2",
+	bus_no: "IITM2_f",
 	start_stop_id: "1",
 	end_stop_id: "6",
 }));
 
 buses.push(new bus_model({
-	bus_no: "IITM3",
+	bus_no: "IITM1_b",
 	start_stop_id: "15",
 	end_stop_id: "1",
 }));
 
 buses.push(new bus_model({
-	bus_no: "IITM4",
+	bus_no: "IITM2_b",
 	start_stop_id: "6",
 	end_stop_id: "1",
 }));
