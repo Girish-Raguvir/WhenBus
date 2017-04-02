@@ -287,7 +287,7 @@ heuristics_controller.prototype.update = function(callback) {
     //     })(s);
     // });
 
-    for(var s=stop_no;s<stop_no+20;s++){
+    for(var s=stop_no;s<stop_no+1;s++){
 
       (function(i){
 
@@ -297,7 +297,7 @@ heuristics_controller.prototype.update = function(callback) {
 
           me.find_bus_stop_location(me.bus_no, i, function(err,resp){
 
-              console.log(resp);
+              // console.log(resp);
 
               if(resp.success==false)
               {
@@ -354,12 +354,12 @@ heuristics_controller.prototype.update = function(callback) {
         })(s);
       }
 
-      // return callback(err, {
-      //   success: true,
-      //   payload: {
-      //     msg: "success"
-      //   }
-      // });
+      return callback(err, {
+        success: true,
+        payload: {
+          msg: "success"
+        }
+      });
 
   });
 };
