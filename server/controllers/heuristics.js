@@ -41,7 +41,8 @@ heuristics_controller.prototype.query = function(callback){
     }
 
     var f = 0;
-    var curr_time = new Date().getTime();
+    var dt = new Date();
+    var curr_time = dt.getSeconds() + (60 * dt.getMinutes()) + (60 * 60 * dt.getHours());
 
     for(var i=0;i<route.timings.length;i++)
     {
@@ -293,7 +294,8 @@ heuristics_controller.prototype.update = function(callback) {
 
           console.log(i);
 
-          var curr_time = new Date().getTime();
+          var dt = new Date();
+          var curr_time = dt.getSeconds() + (60 * dt.getMinutes()) + (60 * 60 * dt.getHours());
 
           me.find_bus_stop_location(me.bus_no, i, function(err,resp){
 
@@ -333,6 +335,8 @@ heuristics_controller.prototype.update = function(callback) {
 
                     var updated_time = curr_time+travel_time;
 
+                    // console.log(curr_time);
+                    // console.log(travel_time);
                     // console.log(updated_time);
 
                     me.update_timing(i, me.bus_no, updated_time, function (err, resp) {
