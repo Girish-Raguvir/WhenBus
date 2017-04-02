@@ -45,7 +45,7 @@ BusController.prototype.deg2rad = function(deg) {
 
 /**
  * Finds the bus stop closest to the user co-ordinates that also has requested bus passing through it
- * @param {Array} allstops - An array of stops(from the database) 
+ * @param {Array} allstops - An array of stops(from the database)
  * @param {Array} callback - Callback function to execute(which returns a response) after closest stop is found
  */
 BusController.prototype.findMin = function(allstops, callback) {
