@@ -9,11 +9,13 @@ var crypto = require('crypto');
 
 var account_controller = require("./controllers/account.js")
 var BusController = require('./controllers/bus_and_stop.js')
+var heuristics_controller = require('./controllers/heuristics.js')
 
 var User = require("./models/user.js")
 var Stop_model = require('./models/bus_stop.js');
 var Bus_model = require('./models/bus.js');
 var Route_model = require('./models/route.js');
+
 
 var mongoose = require('mongoose')
 mongoose.connect('mongodb://girishraguvir:qwerty@ds129030.mlab.com:29030/whenbus')
@@ -128,6 +130,59 @@ router.route("/bus")
 		});
 	});
 
+	router.route("/heuristics")
+		.post(function(req, res) {
+			var response = {};
+
+			var choice = req.body.choice;
+			var lon = req.body.gps_lon;
+			var lat = req.body.gps_lat;
+			var bus_no = req.body.bus_no;
+			var bus_stop = req.body.bus_stop;
+			var direction = req.body.direction;
+
+			var heuristics = new heuristics_controller(lat, lon, bus_no, bus_stop, direction, Route_model, Stop_model);
+
+			if(choice=="update")
+			{
+				heuristics.update(function(err, resp) {
+					if (err) {
+						response = {
+							"success": false,
+							"message": "Error"
+						};
+					} else {
+						response = {
+							"success": resp.success,
+							"message": resp.payload
+						};
+					}
+					res.json(response);
+				});
+			}
+
+			else if(choice=="query")
+			{
+				heuristics.query(function(err, resp) {
+					if (err) {
+						response = {
+							"success": false,
+							"message": "Error"
+						};
+					} else {
+						response = {
+							"success": resp.success,
+							"message": resp.payload
+						};
+					}
+					res.json(response);
+				});
+			}
+
+		});
+
 app.use('/', router);
 
-app.listen(process.env.PORT || 3000);
+// app.listen(process.env.PORT || 3000);
+app.listen(3000);
+console.log("Listening");
