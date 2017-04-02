@@ -59,7 +59,7 @@ public class LoginActivity extends Activity {
         loginSession = new LoginSession(getApplicationContext());
 
         //Check state
-        if(loginSession.isLoggedin()){
+        if(true ||  loginSession.isLoggedin()){
             Intent intent = new Intent(LoginActivity.this, Home.class);
             startActivity(intent);
             finish();
