@@ -10,6 +10,59 @@ var heuristics_controller = function(lat, lon, bus_no, bus_stop, direction, rout
   this.find_travel_info = require('./google_distance.js')
 };
 
+heuristics_controller.prototype.query = function(callback){
+  var me = this;
+
+  me.route_model.findOne({
+    bus_stop: me.bus_stop,
+    bus_no: me.bus_no
+  }, function(err, route) {
+
+    if (err) {
+      return callback(err, {
+        success: false,
+        payload: {
+          msg: me.api_error_messages.database_error
+        }
+      });
+    }
+
+    // console.log(me.bus_stop);
+    // console.log(me.bus_no);
+
+    if(!route)
+    {
+      return callback(err, {
+        success: false,
+        payload: {
+          msg: me.api_error_messages.bus_stop_not_found
+        }
+      });
+    }
+
+    var f = 0;
+    var curr_time = new Date().getTime();
+
+    for(var i=0;i<route.timings.length;i++)
+    {
+      if(route.timings[i]>curr_time){f=i;break;}
+    }
+
+    // console.log(f);
+    // console.log(route.timings[f]);
+
+    return callback(err, {
+    success: true,
+    payload:
+    {
+      bus_no: me.bus_no,
+      bus_stop: me.bus_stop,
+      time: route.timings[f]
+    }
+    });
+  });
+}
+
 heuristics_controller.prototype.find_bus_stop_location = function(bus_no,stop_no, callback) {
   var me = this;
 
