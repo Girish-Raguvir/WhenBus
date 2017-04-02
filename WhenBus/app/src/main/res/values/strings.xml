@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">WhenBus</string>
-
     <!-- Strings related to login -->
 
     <string name="error_invalid_email">This email address is invalid</string>
@@ -35,4 +34,5 @@
         completions."
     </string>
     <string name="title_activity_example">Sign in</string>
+    <string name="destination">Destination...</string>
 </resources>
