@@ -11,7 +11,6 @@
 var BusController = function(lat, lon, bus_no, stop_model, bus_model, route_model) {
 	this.lat = lat;
 	this.lon = lon;
-	this.bus_no = bus_no.toUpperCase();
 	this.stop_model = stop_model;
 	this.bus_model = bus_model;
 	this.route_model = route_model;

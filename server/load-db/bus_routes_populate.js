@@ -38,7 +38,7 @@ for (i = 1; i <= 15; i++) {
 				for(m=0; m<60; m=m+15){
 					var cur_h = h+ Math.floor((m+i)/60);
 					var cur_m = (m+i)%60;
-					var tot_time = cur_h * 60 * 60 * 1000 + cur_m * 60 * 1000;
+					var tot_time = cur_h * 60 * 60  + cur_m * 60 ;
 					times.push(tot_time);
 				}
 			}
@@ -58,7 +58,7 @@ for (i = 1; i <= 6; i++) {
 				for(m=0; m<60; m=m+30){
 					var cur_h = h+ Math.floor((m+i)/60)
 					var cur_m = (m+i)%60
-					var tot_time = cur_h * 60 * 60 * 1000 + cur_m * 60 * 1000;
+					var tot_time = cur_h * 60 * 60   + cur_m * 60 ;
 					times.push(tot_time);
 				}
 			}
@@ -79,7 +79,7 @@ for (i = 1; i <= 15; i++) {
 				for(m=0; m<60; m=m+15){
 					var cur_h = h+ Math.floor((m+i)/60)
 					var cur_m = (m+i)%60
-					var tot_time = cur_h * 60 * 60 * 1000 + cur_m * 60 * 1000;
+					var tot_time = cur_h * 60 * 60  + cur_m * 60 ;
 					times.push(tot_time);
 				}
 			}
@@ -100,7 +100,7 @@ for (i = 1; i <= 6; i++) {
 				for(m=15; m<60; m=m+30){
 					var cur_h = h+ Math.floor((m+i)/60)
 					var cur_m = (m+i)%60
-					var tot_time = cur_h * 60 * 60 * 1000 + cur_m * 60 * 1000;
+					var tot_time = cur_h * 60 * 60  + cur_m * 60 ;
 					times.push(tot_time);
 				}
 			}

@@ -1,8 +1,8 @@
 var heuristics_controller = function(lat, lon, bus_no, bus_stop, direction, route_model,stop_model) {
 	this.lat = lat;
 	this.lon = lon;
-	this.bus_no = bus_no.toUpperCase();
-  this.bus_stop = bus_stop.toUpperCase();
+	this.bus_no = bus_no;
+  this.bus_stop = bus_stop;
   this.direction = direction;
   this.route_model = route_model;
   this.stop_model = stop_model;
@@ -27,8 +27,8 @@ heuristics_controller.prototype.query = function(callback){
       });
     }
 
-    // console.log(me.bus_stop);
-    // console.log(me.bus_no);
+	// console.log(me.bus_stop);
+	// console.log(me.bus_no);
 
     if(!route)
     {
@@ -49,8 +49,8 @@ heuristics_controller.prototype.query = function(callback){
       if(route.timings[i]>curr_time){f=i;break;}
     }
 
-    // console.log(f);
-    // console.log(route.timings[f]);
+	// console.log(f);
+	// console.log(route.timings[f]);
 
     return callback(err, {
     success: true,
@@ -58,7 +58,8 @@ heuristics_controller.prototype.query = function(callback){
     {
       bus_no: me.bus_no,
       bus_stop: me.bus_stop,
-      time: route.timings[f]
+      time: String(Math.floor(route.timings[f]/3600)) + ":" + String(Math.floor((route.timings[f]%3600)/60))
+
     }
     });
   });
