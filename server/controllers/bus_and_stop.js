@@ -8,26 +8,30 @@
  * @param {Object} bus_model - The schema of the stop database in Mongoose
  * @param {Object} route_model - The schema of the stop database in Mongoose
  */
-var BusController = function(lat, lon, bus_no, stop_model, bus_model, route_model) {
-	this.lat = lat;
-	this.lon = lon;
+var BusController = function(user_lat, user_lon, dest_lat, dest_lon, stop_model, bus_model, route_model) {
+	this.user_lat = user_lat;
+	this.user_lon = user_lon;
+	this.dest_lat = dest_lat;
+	this.dest_lon = dest_lon;
 	this.stop_model = stop_model;
 	this.bus_model = bus_model;
 	this.route_model = route_model;
 	this.api_error_messages = require('../models/api_error_messages.js');
+	this.deasync = require("deasync");
+	this.k = 3
 };
 
 /**
  * Calculates in Km, the distance of an given bus stop, to the co-ordinates of the user
  * @param {Object} stop - A collection(element) from the stop database for which we calculate distance from User coordinates
  */
-BusController.prototype.getDistanceFromLatLon = function(stop) {
+BusController.prototype.getDistanceFromLatLon = function(gps1, gps2) {
 	var R = 6371; // Radius of the earth in km
-	var dLat = this.deg2rad(this.lat - stop.gps_lat);
-	var dLon = this.deg2rad(this.lon - stop.gps_lon);
+	var dLat = this.deg2rad(gps1.lat - gps2.lat);
+	var dLon = this.deg2rad(gps1.lon - gps2.lon);
 	var a =
 		Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-		Math.cos(this.deg2rad(stop.gps_lat)) * Math.cos(this.deg2rad(this.lat)) *
+		Math.cos(this.deg2rad(gps2.lat)) * Math.cos(this.deg2rad(gps1.lat)) *
 		Math.sin(dLon / 2) * Math.sin(dLon / 2);
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 	var d = R * c; // Distance in km
@@ -108,49 +112,78 @@ BusController.prototype.findMin = function(allstops, callback) {
 
 }
 
+BusController.prototype.getKNearestStop = function(busstops, ref_loc, k) {
+	var me = this;
+
+	stop_dist = []
+	for (var i = 0, len = busstops.length; i < len; i++) {
+		stop_dist.push({
+			"stop_no": busstops[i].stop_id,
+			"stop_dist": me.getDistanceFromLatLon({
+					"lat": busstops[i].gps_lat,
+					"lon": busstops[i].gps_lon
+				},
+				ref_loc)
+		});
+	}
+	stop_dist.sort(function(a, b) {
+		return parseFloat(a.stop_dist) - parseFloat(b.stop_dist);
+	});
+
+	return stop_dist.slice(0, k);
+}
+
 /**
  * Checks if bus requested is valid, and finds the bus stop closest to to the user via which requested bus passes through
  * @param {Array} callback - Callback function to execute(which returns a response) after closest stop is found
  */
 BusController.prototype.findStop = function(callback) {
 	var me = this;
+	var unlocked = false;
+	var stops_near_user;
+	var stops_near_dest;
 
-	// Check if bus exists in database
-	me.bus_model.findOne({
-		bus_no: me.bus_no
-	}, function(err, bus) {
-		if (err) {
-			return callback(err, {
+	console.log("Started")
+
+	// Find the candidate destination bus_stops(k)
+	// Find the candidate source bus_stops(k)
+	me.stop_model.find({}, function(err1, stop) {
+		if (err1) {
+			return callback(err1, {
 				success: false,
 				payload: {
 					msg: me.api_error_messages.database_error
 				}
 			});
-		}
-		if (!bus) {
-			// Bus does not exist
-			return callback(err, {
-				success: false,
-				payload: {
-					msg: me.api_error_messages.bus_not_found
-				}
-			});
 		} else {
-			// Find the nearest bus
-			me.stop_model.find({}, function(err1, stop) {
-				if (err1) {
-					return callback(err1, {
-						success: false,
-						payload: {
-							msg: me.api_error_messages.database_error
-						}
-					});
-				} else {
-					me.findMin(stop, callback);
-				}
-			});
+			stops_near_user = me.getKNearestStop(stop, {
+				"lat": me.user_lat,
+				"lon": me.user_lon
+			}, me.k);
+
+			stops_near_dest = me.getKNearestStop(stop, {
+				"lat": me.dest_lat,
+				"lon": me.dest_lon
+			}, me.k);
+			unlocked = true;
 		}
 	});
+
+	this.deasync.loopWhile(function() {
+		return !unlocked;
+	});
+
+	console.log(stops_near_user)
+	console.log(stops_near_dest)
+	console.log("Got bus stops near user and end point")
+
+	// find buses going through any candidate-source ----> candidate-dest.
+
+	// For all buses such that  (src_gps - src_bus)^2 + (dest_gps - dest_stop)^2 is min
+
+	// 
+
+
 
 };
 

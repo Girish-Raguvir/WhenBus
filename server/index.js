@@ -107,12 +107,14 @@ router.route("/bus")
 	.post(function(req, res) {
 		var response = {};
 
-		var lon = req.body.gps_lon;
-		var lat = req.body.gps_lat;
+		var lat_u = req.body.gps_lat_u;
+		var lon_u = req.body.gps_lon_u;
+		var lat_d = req.body.gps_lat_d;
+		var lon_d = req.body.gps_lon_d;
 		var bus_no = req.body.bus_no;
 
 		// Locate BusStop
-		var bus = new BusController(lat, lon, bus_no, Stop_model, Bus_model, Route_model);
+		var bus = new BusController(lat_u, lon_u, lat_d, lon_d, Stop_model, Bus_model, Route_model);
 
 		bus.findStop(function(err, resp) {
 			if (err) {
@@ -130,56 +132,52 @@ router.route("/bus")
 		});
 	});
 
-	router.route("/heuristics")
-		.post(function(req, res) {
-			var response = {};
+router.route("/heuristics")
+	.post(function(req, res) {
+		var response = {};
 
-			var choice = req.body.choice;
-			var lon = req.body.gps_lon;
-			var lat = req.body.gps_lat;
-			var bus_no = req.body.bus_no;
-			var bus_stop = req.body.bus_stop;
-			var direction = req.body.direction;
+		var choice = req.body.choice;
+		var lon = req.body.gps_lon;
+		var lat = req.body.gps_lat;
+		var bus_no = req.body.bus_no;
+		var bus_stop = req.body.bus_stop;
+		var direction = req.body.direction;
 
-			var heuristics = new heuristics_controller(lat, lon, bus_no, bus_stop, direction, Route_model, Stop_model);
+		var heuristics = new heuristics_controller(lat, lon, bus_no, bus_stop, direction, Route_model, Stop_model);
 
-			if(choice=="update")
-			{
-				heuristics.update(function(err, resp) {
-					if (err) {
-						response = {
-							"success": false,
-							"message": "Error"
-						};
-					} else {
-						response = {
-							"success": resp.success,
-							"message": resp.payload
-						};
-					}
-					res.json(response);
-				});
-			}
+		if (choice == "update") {
+			heuristics.update(function(err, resp) {
+				if (err) {
+					response = {
+						"success": false,
+						"message": "Error"
+					};
+				} else {
+					response = {
+						"success": resp.success,
+						"message": resp.payload
+					};
+				}
+				res.json(response);
+			});
+		} else if (choice == "query") {
+			heuristics.query(function(err, resp) {
+				if (err) {
+					response = {
+						"success": false,
+						"message": "Error"
+					};
+				} else {
+					response = {
+						"success": resp.success,
+						"message": resp.payload
+					};
+				}
+				res.json(response);
+			});
+		}
 
-			else if(choice=="query")
-			{
-				heuristics.query(function(err, resp) {
-					if (err) {
-						response = {
-							"success": false,
-							"message": "Error"
-						};
-					} else {
-						response = {
-							"success": resp.success,
-							"message": resp.payload
-						};
-					}
-					res.json(response);
-				});
-			}
-
-		});
+	});
 
 app.use('/', router);
 
