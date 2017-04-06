@@ -132,11 +132,13 @@ router.route("/users/login")
 
 		var response = {};
 
+		// Get user input details
 		var email = req.body.email;
 		var password = req.body.password;
 
 		var account = new account_controller(User, {});
 
+		// Attempt Login
 		account.login(email, password, function(err, resp) {
 			if (err) {
 				response = {
@@ -228,6 +230,7 @@ router.route("/heuristics")
 	.post(function(req, res) {
 		var response = {};
 
+		// Get user input from crowdsourcing
 		var lon = req.body.gps_lon;
 		var lat = req.body.gps_lat;
 		var bus_no = req.body.bus_no;
@@ -235,6 +238,7 @@ router.route("/heuristics")
 
 		var heuristics = new heuristics_controller(lat, lon, bus_no, bus_stop, direction, Route_model, Stop_model);
 
+		// Perform update using collected data
 		heuristics.update(function(err, resp) {
 			if (err) {
 				response = {
