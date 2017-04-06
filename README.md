@@ -21,3 +21,7 @@ The requests(GET/POST) are :
 * POST - /users/login
 * POST - /bus
 * GET - /
+
+Run JSDoc Using :
+
+	./node_modules/.bin/jsdoc server/controllers/bus_and_stop.js 

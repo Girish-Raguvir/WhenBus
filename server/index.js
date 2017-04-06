@@ -113,10 +113,11 @@ router.route("/bus")
 		var lon_d = req.body.gps_lon_d;
 		var bus_no = req.body.bus_no;
 
-		// Locate BusStop
+		// Create class object
 		var bus = new BusController(lat_u, lon_u, lat_d, lon_d, Stop_model, Bus_model, Route_model);
 
-		bus.findStop(function(err, resp) {
+		// Get buses/timings and  one bus stop
+		bus.findBus(function(err, resp) {
 			if (err) {
 				response = {
 					"success": false,
