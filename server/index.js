@@ -120,7 +120,7 @@ router.route("/bus")
 			if (err) {
 				response = {
 					"success": false,
-					"message": "Error logging in"
+					"message": "Error fetching data"
 				};
 			} else {
 				response = {

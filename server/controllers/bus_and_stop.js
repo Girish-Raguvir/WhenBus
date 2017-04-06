@@ -18,8 +18,10 @@ var BusController = function(user_lat, user_lon, dest_lat, dest_lon, stop_model,
 	this.bus_model = bus_model;
 	this.route_model = route_model;
 	this.api_error_messages = require('../models/api_error_messages.js');
+	this.heuristics_controller = require('../controllers/heuristics.js')
+
 	this.deasync = require("deasync");
-	this.k = 3
+	this.k = 4; //Set number of nearby stops to consider
 };
 
 /**
@@ -119,12 +121,14 @@ BusController.prototype.getKNearestStop = function(busstops, ref_loc, k) {
 	stop_dist = []
 	for (var i = 0, len = busstops.length; i < len; i++) {
 		stop_dist.push({
-			"stop_no": busstops[i].stop_id,
+			"stop_id": busstops[i].stop_id,
 			"stop_dist": me.getDistanceFromLatLon({
 					"lat": busstops[i].gps_lat,
 					"lon": busstops[i].gps_lon
 				},
-				ref_loc)
+				ref_loc),
+			"num_bus": 0,
+			"bus_list": new Set()
 		});
 	}
 	stop_dist.sort(function(a, b) {
@@ -144,7 +148,8 @@ BusController.prototype.findStop = function(callback) {
 	var stops_near_user;
 	var stops_near_dest;
 
-	console.log("Started")
+	console.log("Started Heuristics Query")
+	console.log("Getting bus stops near user and end point")
 
 	// Find the candidate destination bus_stops(k)
 	// Find the candidate source bus_stops(k)
@@ -170,16 +175,123 @@ BusController.prototype.findStop = function(callback) {
 		}
 	});
 
-	this.deasync.loopWhile(function() {
+	me.deasync.loopWhile(function() {
 		return !unlocked;
 	});
 
-	console.log(stops_near_user)
-	console.log(stops_near_dest)
-	console.log("Got bus stops near user and end point")
+	console.log("Finding candidate buses")
 
-	// find buses going through any candidate-source ----> candidate-dest.
-	me.route_model.find({}, function(err, stop) {
+	for (var i = 0; i < stops_near_user.length; ++i) {
+		var hold = true;
+		me.route_model.find({
+			"bus_stop": stops_near_user[i].stop_id
+		}, function(err, routes) {
+			if (err) {
+				return callback(err, {
+					success: false,
+					payload: {
+						msg: me.api_error_messages.database_error
+					}
+				});
+			} else {
+				for (var j = 0; j < routes.length; ++j) {
+					for (var k = 0; k < stops_near_dest.length; ++k) {
+						var lck = true;
+						me.route_model.find({
+							"bus_no": routes[j].bus_no,
+							"bus_stop": stops_near_dest[k].stop_id
+						}, function(err, path) {
+							if (err) {
+								return callback(err, {
+									success: false,
+									payload: {
+										msg: me.api_error_messages.database_error
+									}
+								});
+							} else {
+								if (path.length > 0 && routes[j].stop_no < path[0].stop_no) {
+									stops_near_user[i].num_bus += +1;
+									stops_near_user[i].bus_list.add(path[0].bus_no);
+								}
+							}
+							lck = false;
+						});
+						me.deasync.loopWhile(function() {
+							return lck;
+						});
+					}
+				}
+			}
+			hold = false;
+		});
+
+		me.deasync.loopWhile(function() {
+			return hold;
+		});
+	}
+
+	// Get the best user Bus Stop
+	var best_user_stop = -1;
+	for (var i = 0; i < stops_near_user.length; ++i) {
+		if (stops_near_user[i].num_bus > 0) {
+			best_user_stop = i;
+			break;
+		}
+	}
+
+	if (best_user_stop == -1) {
+		return callback(0, {
+			success: false,
+			payload: {
+				msg: me.api_error_messages.no_nearby_stop
+			}
+		});
+	}
+
+	var heuristics = new me.heuristics_controller(
+		0.0,
+		0.0,
+		null,
+		stops_near_user[best_user_stop].stop_id,
+		null,
+		me.route_model,
+		me.stop_model);
+
+	bus_and_timings = []
+	var mutex = stops_near_user[best_user_stop].bus_list.size;
+
+	console.log("Calculating Heuristics..");
+
+	stops_near_user[best_user_stop].bus_list.forEach(function(cur_bus) {
+
+		var ret_val = null;
+		ret_val = heuristics.query(cur_bus, callback);
+
+		me.deasync.loopWhile(function() {
+			return (ret_val == null);
+		});
+
+		if (!ret_val.success) {
+			return callback(err, {
+				success: false,
+				payload: {
+					msg: ret_val.payload.msg
+				}
+			});
+		} else {
+			bus_and_timings.push({
+				"bus_no": cur_bus,
+				"arrival_time": ret_val.payload.time
+			});
+		}
+	});
+
+
+	var user_stop_return;
+	var locked = true;
+	me.stop_model.find({
+		stop_id: stops_near_user[best_user_stop].stop_id
+	}, function(err, stop) {
 		if (err) {
 			return callback(err, {
 				success: false,
@@ -188,11 +300,27 @@ BusController.prototype.findStop = function(callback) {
 				}
 			});
 		} else {
-			
+			user_stop_return = {
+				"lat": stop.gps_lat,
+				"lon": stop.gps_lon
+			}
+		}
+		locked = false;
+	});
+
+	me.deasync.loopWhile(function() {
+		return locked;
+	});
+
+	console.log("Returning result")
+	return callback(0, {
+		success: true,
+		payload: {
+			stop_lat: user_stop_return.lat,
+			stop_lon: user_stop_return.lon,
+			bus_details: bus_and_timings 
 		}
 	});
-	// For all buses such that  (src_gps - src_bus)^2 + (dest_gps - dest_stop)^2 is min
-
 
 
 };
