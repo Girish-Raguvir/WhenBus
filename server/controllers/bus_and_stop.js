@@ -1,9 +1,10 @@
 /**
  * Represents bus and has operations related to finding nearest bus Stop and estimated arrival time
  * @constructor
- * @param {Number} lat - The latitude of the user
- * @param {Number} lon - The longitude of the user
- * @param {String} bus_no - The bus number that the user want to query for
+ * @param {Number} user_lat - The latitude of the user
+ * @param {Number} user_lon - The longitude of the user
+ * @param {Number} dest_lat - The latitude of the user
+ * @param {Number} dest_lon - The longitude of the user
  * @param {Object} stop_model - The schema of the stop database in Mongoose
  * @param {Object} bus_model - The schema of the stop database in Mongoose
  * @param {Object} route_model - The schema of the stop database in Mongoose
@@ -61,9 +62,9 @@ BusController.prototype.findMin = function(allstops, callback) {
 		me.route_model.findOne({
 			bus_no: me.bus_no,
 			bus_stop: s.stop_id
-		}, function(err2, route) {
-			if (err2) {
-				return callback(err2, {
+		}, function(err, route) {
+			if (err) {
+				return callback(err, {
 					success: false,
 					payload: {
 						msg: me.api_error_messages.database_error
@@ -147,9 +148,9 @@ BusController.prototype.findStop = function(callback) {
 
 	// Find the candidate destination bus_stops(k)
 	// Find the candidate source bus_stops(k)
-	me.stop_model.find({}, function(err1, stop) {
-		if (err1) {
-			return callback(err1, {
+	me.stop_model.find({}, function(err, stop) {
+		if (err) {
+			return callback(err, {
 				success: false,
 				payload: {
 					msg: me.api_error_messages.database_error
@@ -178,10 +179,19 @@ BusController.prototype.findStop = function(callback) {
 	console.log("Got bus stops near user and end point")
 
 	// find buses going through any candidate-source ----> candidate-dest.
-
+	me.route_model.find({}, function(err, stop) {
+		if (err) {
+			return callback(err, {
+				success: false,
+				payload: {
+					msg: me.api_error_messages.database_error
+				}
+			});
+		} else {
+			
+		}
+	});
 	// For all buses such that  (src_gps - src_bus)^2 + (dest_gps - dest_stop)^2 is min
-
-	// 
 
 
 
