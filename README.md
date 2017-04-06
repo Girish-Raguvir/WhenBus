@@ -22,6 +22,11 @@ The requests(GET/POST) are :
 * POST - /bus
 * GET - /
 
-Run JSDoc Using :
+Run APIDOC/JSDoc Using :
 
-	./node_modules/.bin/jsdoc server/controllers/bus_and_stop.js 
+	./create_doc.sh
+
+
+APIDOC found at:
+
+	http://whenbus-api-doc.s3-website.ap-south-1.amazonaws.com/
