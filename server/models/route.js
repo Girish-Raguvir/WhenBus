@@ -1,17 +1,23 @@
+/**
+ * @fileOverview Schema for Bus routes
+ */
+
+/**
+ * @module Route model
+ */
 var mongoose = require("mongoose");
 
-// To be used during deployment
-
-// mongoose.connect(process.env.PROD_MONGODB, function (error) {
-//     if (error) console.error(error);
-//     else console.log('mongo connected');
-// });
 
 var mongoSchema = mongoose.Schema;
+/** @class **/
 var route = {
+	/** unique bus stop number **/
 	"bus_stop": String,
+	/** unique bus number **/
 	"bus_no": String,
+	/** stop position along the bus route **/
 	"stop_no": Number,
+	/** Array of timings indicating when bus stops and particular bus stop**/
 	"timings": Array
 };
 

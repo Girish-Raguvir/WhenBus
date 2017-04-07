@@ -1,16 +1,20 @@
+/**
+ * @fileOverview Schema for Buses
+ */
+
+/**
+ * @module Bus model
+ */
 var mongoose = require("mongoose");
 
-// To be used during deployment
-
-// mongoose.connect(process.env.PROD_MONGODB, function (error) {
-//     if (error) console.error(error);
-//     else console.log('mongo connected');
-// });
-
 var mongoSchema = mongoose.Schema;
+/** @class **/
 var bus = {
+	/** unique bus number **/
 	"bus_no": String,
+	/** unique bus start stop ID **/
 	"start_stop_id": String,
+	/** unique bus end stop ID **/
 	"end_stop_id": String,
 };
 

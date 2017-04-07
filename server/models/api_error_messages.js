@@ -1,3 +1,6 @@
+/**
+ * @fileOverview Error message codes
+ */
 var api_error_messages = function() {};
 
 api_error_messages.email_not_found = 0;

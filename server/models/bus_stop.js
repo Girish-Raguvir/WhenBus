@@ -1,17 +1,23 @@
+/**
+ * @fileOverview Schema for Bus Stop
+ */
+
+/**
+ * @module Bus Stop Model
+ */
 var mongoose = require("mongoose");
 
-// To be used during deployment
-
-// mongoose.connect(process.env.PROD_MONGODB, function (error) {
-//     if (error) console.error(error);
-//     else console.log('mongo connected');
-// });
 
 var mongoSchema = mongoose.Schema;
+/** @class **/
 var bus_stop = {
+	/** unique bus stop ID **/
 	"stop_id": String,
+	/** unique bus stop name **/
 	"stop_name": String,
+	/** Latitude of  bus stop **/
 	"gps_lat": Number,
+	/** Longitude of  bus stop **/
 	"gps_lon": Number
 };
 
