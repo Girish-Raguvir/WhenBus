@@ -14,7 +14,8 @@ tags
 # Generated files
 gen/
 out/
-# apidoc/
+apidoc/
+servdoc/
 
 # Gradle files
 .gradle/
