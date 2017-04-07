@@ -175,7 +175,9 @@ heuristics_controller.prototype.update_timing = function(stop_no, bus_no, time, 
 
 		route.timings[f] = 0.8 * route.timings[f] + 0.2 * time;
 
-		route.save(function(err) {
+		route.markModified('timings');
+
+		route.save(route, function(err) {
 			if (err) {
 				return callback(err, {
 					success: false,
@@ -190,6 +192,7 @@ heuristics_controller.prototype.update_timing = function(stop_no, bus_no, time, 
 				});
 			}
 		});
+
 	});
 }
 
@@ -216,110 +219,56 @@ heuristics_controller.prototype.update = function(callback) {
 		var f = 1;
 		// console.log(route);
 
-		// var allstops = [stop_no];
-		// for(var i=stop_no;i<stop_no+20;i++){allstops.push(i);}
-		//
-		// var temp = allstops.reduce(function(t, s) {
-		//   (function(i){
-		//
-		//       console.log(i);
-		//
-		//       var curr_time = new Date().getTime();
-		//
-		//       me.find_bus_stop_location(me.bus_no, i, function(err,resp){
-		//
-		//           console.log(resp);
-		//
-		//           if(resp.success==false)
-		//           {
-		//             return callback(err, {
-		//               success: true,
-		//               payload: {
-		//                 msg: "success"
-		//               }
-		//             });
-		//           }
-		//           else
-		//           {
-		//             // var start = '12.935164,80.233645';
-		//             // var end = '13.006806,80.240063';
-		//             // console.log(me.lon);
-		//             // console.log(me.lat);
-		//
-		//             end = resp.lat.toString()+","+resp.lon.toString();
-		//             start = me.lat.toString()+","+me.lon.toString();
-		//
-		//             me.find_travel_info(start,end,'transit',function(err,resp){
-		//                 if(err)
-		//                 {
-		//                   return callback(err, {
-		//                     success: false,
-		//                     payload: {
-		//                       msg: me.api_error_messages.database_error
-		//                     }
-		//                   });
-		//                 }
-		//
-		//                 travel_time = resp.durationValue;
-		//
-		//                 var updated_time = curr_time+travel_time;
-		//
-		//                 // console.log(updated_time);
-		//
-		//                 me.update_timing(i, me.bus_no, updated_time, function (err, resp) {
-		//
-		//                   console.log(resp);
-		//
-		//                   if (err) {
-		//                     return callback(err, {
-		//                       success: false,
-		//                       payload: {
-		//                         msg: me.api_error_messages.database_error
-		//                       }
-		//                     });
-		//                   }
-		//
-		//                   f=1;
-		//
-		//                 });
-		//             });
-		//           }
-		//       });
-		//
-		//       return false;
-		//     })(s);
-		// });
+		for (var i = stop_no;; i++) {
 
-		for (var s = stop_no; s < stop_no + 1; s++) {
 
-			(function(i) {
+			// console.log(i);
 
-				console.log(i);
+			var lock = true;
 
-				var dt = new Date();
-				var curr_time = dt.getSeconds() + (60 * dt.getMinutes()) + (60 * 60 * dt.getHours());
+			var dt = new Date();
+			var curr_time = dt.getSeconds() + (60 * dt.getMinutes()) + (60 * 60 * dt.getHours());
 
-				me.find_bus_stop_location(me.bus_no, i, function(err, resp) {
+			me.find_bus_stop_location(me.bus_no, i, function(err, resp) {
 
-					// console.log(resp);
+				// console.log(resp);
 
-					if (resp.success == false) {
-						return callback(err, {
-							success: true,
-							payload: {
-								msg: "success"
-							}
-						});
-					} else {
-						// var start = '12.935164,80.233645';
-						// var end = '13.006806,80.240063';
-						// console.log(me.lon);
-						// console.log(me.lat);
+				if (resp.success == false) {
+					return callback(err, {
+						success: true,
+						payload: {
+							msg: "success"
+						}
+					});
+				} else {
+					// console.log(me.lon);
+					// console.log(me.lat);
 
-						end = resp.lat.toString() + "," + resp.lon.toString();
-						start = me.lat.toString() + "," + me.lon.toString();
+					end = resp.lat.toString() + "," + resp.lon.toString();
+					start = me.lat.toString() + "," + me.lon.toString();
 
-						me.find_travel_info(start, end, 'transit', function(err, resp) {
+					me.find_travel_info(start, end, 'transit', function(err, resp) {
+						if (err) {
+							return callback(err, {
+								success: false,
+								payload: {
+									msg: me.api_error_messages.database_error
+								}
+							});
+						}
+
+						travel_time = resp.durationValue;
+
+						var updated_time = curr_time + travel_time;
+
+						// console.log(curr_time);
+						// console.log(travel_time);
+						// console.log(updated_time);
+
+						me.update_timing(i, me.bus_no, updated_time, function(err, resp) {
+
+							// console.log(resp);
+
 							if (err) {
 								return callback(err, {
 									success: false,
@@ -329,31 +278,15 @@ heuristics_controller.prototype.update = function(callback) {
 								});
 							}
 
-							travel_time = resp.durationValue;
-
-							var updated_time = curr_time + travel_time;
-
-							// console.log(curr_time);
-							// console.log(travel_time);
-							// console.log(updated_time);
-
-							me.update_timing(i, me.bus_no, updated_time, function(err, resp) {
-
-								console.log(resp);
-
-								if (err) {
-									return callback(err, {
-										success: false,
-										payload: {
-											msg: me.api_error_messages.database_error
-										}
-									});
-								}
-							});
+							lock = false;
 						});
-					}
-				});
-			})(s);
+					});
+				}
+			});
+
+			me.deasync.loopWhile(function() {
+				return lock;
+			});
 		}
 
 		return callback(err, {
