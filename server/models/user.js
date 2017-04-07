@@ -1,17 +1,22 @@
+/**
+ * @fileOverview Schema for Users 
+ */
+
+/**
+ * @module User model
+ */
 var mongoose = require("mongoose");
 
-// To be used during deployment
-
-// mongoose.connect(process.env.PROD_MONGODB, function (error) {
-//     if (error) console.error(error);
-//     else console.log('mongo connected');
-// });
-
 var mongoSchema = mongoose.Schema;
+/** @class **/
 var user_schema = {
+	/** user name **/
 	"name": String,
+	/** unique user email **/
 	"email": String,
+	/** Hashed user password**/
 	"password_hash": String,
+	/** password salt for encrypting **/
 	"password_salt": String
 };
 
