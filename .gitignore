@@ -13,7 +13,8 @@ tags
 
 # Generated files
 gen/
-# out/
+out/
+apidoc/
 
 # Gradle files
 .gradle/
