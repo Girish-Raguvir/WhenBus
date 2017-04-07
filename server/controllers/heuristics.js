@@ -170,12 +170,12 @@ heuristics_controller.prototype.update_timing = function(stop_no, bus_no, time, 
 		if (f == -1) f = route.timings.length - 1;
 
 		// console.log(f);
-		console.log("hhh"+route.timings[f]);
+		// console.log(route.timings[f]);
 		// console.log(time);
 
 		route.timings[f] = 0.8 * route.timings[f] + 0.2 * time;
 
-		console.log("hhh"+route.timings[f]);
+		route.markModified('timings');
 
 		route.save(route, function(err) {
 			if (err) {
@@ -219,10 +219,10 @@ heuristics_controller.prototype.update = function(callback) {
 		var f = 1;
 		// console.log(route);
 
-		for (var i = stop_no; i < stop_no + 1; i++) {
+		for (var i = stop_no;; i++) {
 
 
-			console.log(i);
+			// console.log(i);
 
 			var lock = true;
 
@@ -241,8 +241,6 @@ heuristics_controller.prototype.update = function(callback) {
 						}
 					});
 				} else {
-					// var start = '12.935164,80.233645';
-					// var end = '13.006806,80.240063';
 					// console.log(me.lon);
 					// console.log(me.lat);
 
@@ -263,13 +261,13 @@ heuristics_controller.prototype.update = function(callback) {
 
 						var updated_time = curr_time + travel_time;
 
-						console.log(curr_time);
-						console.log(travel_time);
-						console.log(updated_time);
+						// console.log(curr_time);
+						// console.log(travel_time);
+						// console.log(updated_time);
 
 						me.update_timing(i, me.bus_no, updated_time, function(err, resp) {
 
-							console.log(resp);
+							// console.log(resp);
 
 							if (err) {
 								return callback(err, {
