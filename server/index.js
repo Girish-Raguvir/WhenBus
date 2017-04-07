@@ -256,6 +256,15 @@ router.route("/heuristics")
 
 	});
 
+var path = require('path');
+
+app.use(express.static(path.join(__dirname, 'apidoc')));
+
+router.get("/docs", function(req, res) {
+	res.sendFile(path.join(__dirname + '/apidoc/index.html'));
+});
+
+
 app.use('/', router);
 
 app.listen(process.env.PORT || 3000);
