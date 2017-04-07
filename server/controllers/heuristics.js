@@ -1,3 +1,20 @@
+/**
+ * @fileOverview Operations Related to Heuristics
+ */
+
+/**
+ * Handles heuristics realted operations
+ * @constructor
+ * @param {Number} user_lat - The latitude of the user
+ * @param {Number} user_lon - The longitude of the user
+ * @param {String} bus_no - Bus number
+ * @param {String} bus_stop - Bus stop
+ * @param {String} direction - Direction of bus encoded as "0" or "1"
+ * @param {Object} route_model - The schema of the stop database in Mongoose
+ * @param {Object} stop_model - The schema of the stop database in Mongoose
+ * @example
+ * var heuristics = new heuristics_controller = function(lat, lon, bus_no, bus_stop, direction, route_model, stop_model);
+ */
 var heuristics_controller = function(lat, lon, bus_no, bus_stop, direction, route_model, stop_model) {
 	this.lat = lat;
 	this.lon = lon;
@@ -11,6 +28,14 @@ var heuristics_controller = function(lat, lon, bus_no, bus_stop, direction, rout
 	this.deasync = require("deasync");
 };
 
+/**
+ * Returns a JSON containing the next arrival time of the queried bus at the bus stop already chosen for the user
+ * @param {String} bus_no - Bus number
+ * @param {function} callback Callback to execute on error/success
+ * @returns {Object}
+ * @example
+ * heuristics.query(query_bus_no, callback);
+ */
 heuristics_controller.prototype.query = function(query_bus_no, callback) {
 	var me = this;
 
@@ -23,7 +48,7 @@ heuristics_controller.prototype.query = function(query_bus_no, callback) {
 	}, function(err, route) {
 
 		if (err) {
-			return callback({ 
+			return callback({
 				success: false,
 				payload: {
 					msg: me.api_error_messages.database_error
@@ -70,7 +95,17 @@ heuristics_controller.prototype.query = function(query_bus_no, callback) {
 	};
 }
 
-heuristics_controller.prototype.find_bus_stop_location = function(bus_no, stop_no, callback) {
+/**
+ * Returns a JSON containing the bus stop location
+ * @param {String} bus_no - Bus number
+ * @param {String} stop_no - Stop ID
+ * @param {function} callback Callback to execute on error/success
+ * @returns {Object}
+ * @example
+ * heuristics.find_bus_stop_location(bus_no, stop_no, callback);
+ */
+
+ heuristics_controller.prototype.find_bus_stop_location = function(bus_no, stop_no, callback) {
 	var me = this;
 
 	me.route_model.findOne({
@@ -129,6 +164,16 @@ heuristics_controller.prototype.find_bus_stop_location = function(bus_no, stop_n
 	});
 }
 
+/**
+ * Uppdates the timing for a given <bus_np, stop_no> pair using the given time
+ * @param {String} stop_no - Stop ID
+ * @param {String} bus_no - Bus number
+ * @param {Number} time - The one used to update the heuristics
+ * @param {function} callback Callback to execute on error/success
+ * @returns {Object}
+ * @example
+ * heuristics.update_timing(stop_no, bus_no, time, callback);
+ */
 heuristics_controller.prototype.update_timing = function(stop_no, bus_no, time, callback) {
 	var me = this;
 
@@ -196,6 +241,13 @@ heuristics_controller.prototype.update_timing = function(stop_no, bus_no, time, 
 	});
 }
 
+/**
+ * Updates heuristics
+ * @param {function} callback Callback to execute on error/success
+ * @returns {Object}
+ * @example
+ * heuristics.update(callback);
+ */
 heuristics_controller.prototype.update = function(callback) {
 
 	var me = this;
