@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,20 +15,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.gowri.whenbus.Utilities.LoginSession;
-import com.example.gowri.whenbus.fragment.MapsActivity;
+import com.example.gowri.whenbus.fragment.home;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private LoginSession session;
 
-    private EditText search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,23 +31,16 @@ public class Home extends AppCompatActivity
 
         setContentView(R.layout.activity_home);
 
-        search = (EditText)findViewById(R.id.search);
-        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == R.id.search || actionId== EditorInfo.IME_NULL) {
-                    if(event.getAction() == KeyEvent.ACTION_DOWN) {
-                        Toast.makeText(getApplicationContext(), "Search success", Toast.LENGTH_LONG).show();
-                        search_destination();
-                    }
-
-                }
-                return false;
-            }
-        });
 
         session = new LoginSession(getApplicationContext());
+
+        Fragment fragment = new home();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+        transaction.replace(R.id.frame,fragment);
+        transaction.commitAllowingStateLoss();
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,13 +49,8 @@ public class Home extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
 
-                session.setLogin(false);
-                Intent intent = new Intent(Home.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                loadmap();
             }
         });
 
@@ -82,9 +64,7 @@ public class Home extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void search_destination() {
-        ;
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -143,4 +123,16 @@ public class Home extends AppCompatActivity
         return true;
     }
 
+    public void loadmap(){
+        Intent intent = new Intent(Home.this,MapsActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
+    public void loadparallax() {
+        Intent intent = new Intent(Home.this,Parallax.class);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@color/Login_background"
+    tools:context="com.example.gowri.whenbus.fragment.home">
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/round_edittext"
+        android:drawableLeft="@drawable/ic_search"
+        android:ems="10"
+        android:hint="@string/destination"
+        android:imeActionId="@+id/search"
+        android:imeActionLabel="@android:string/search_go"
+        android:imeOptions="actionSearch"
+        android:inputType="textPostalAddress"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlHardcoded" />
+
+    <FrameLayout
+        android:id="@+id/search_frame"
+        android:layout_width="match_parent"
+        android:layout_height="460dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search">
+
+        <TextView
+            android:id="@+id/heroImageView"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="#222"
+            android:gravity="center_vertical"
+            android:padding="15dp"
+            android:text="Nearest bus stop"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="wrap_content"
+            android:layout_height="461dp"
+            android:divider="@color/gray"
+            android:dividerHeight="1dp"
+            android:foregroundGravity="center"
+            android:scrollbars="none" />
+
+        <TextView
+            android:id="@+id/stickyView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/Login_textbox"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Buses onroute"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

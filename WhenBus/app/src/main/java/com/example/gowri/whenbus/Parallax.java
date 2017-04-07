@@ -1,11 +1,9 @@
 package com.example.gowri.whenbus;
 
-/**
- * Created by arch on 2/4/17.
- */
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
@@ -15,8 +13,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.gowri.whenbus.R;
-
 /**
  * <p/>
  * Calculate the position of the sticky header view according to the
@@ -25,7 +21,7 @@ import com.example.gowri.whenbus.R;
  *
  * @author Nilanchala
  */
-public class ParallaxMainActivity extends ActionBarActivity {
+public class Parallax extends AppCompatActivity {
 
     private TextView stickyView;
     private ListView listView;
@@ -38,17 +34,17 @@ public class ParallaxMainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_parallax);
 
         /* Initialise list view, hero image, and sticky view */
         listView = (ListView) findViewById(R.id.listView);
         heroImageView = findViewById(R.id.heroImageView);
-//        stickyView = (TextView) findViewById(R.id.stickyView);
+        stickyView = (TextView) findViewById(R.id.stickyView);
 
         /* Inflate list header layout */
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View listHeader = inflater.inflate(R.layout.list_header, null);
-//        stickyViewSpacer = listHeader.findViewById(R.id.stickyViewPlaceholder);
+        stickyViewSpacer = listHeader.findViewById(R.id.stickyViewPlaceholder);
 
         /* Add list view header */
         listView.addHeaderView(listHeader);

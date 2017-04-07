@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="Login_background">#35485C</color>
-    <color name="Login_textbox">#2D3E53</color>
+    <color name="Login_background">#34495E</color>
+    <color name="Login_textbox">#2D3E50</color>
     <color name="Login_text">#889AA8</color>
     <color name="black">#000000</color>
     <color name="gray">#C0C0C0</color>
