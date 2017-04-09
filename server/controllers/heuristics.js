@@ -9,18 +9,16 @@
  * @param {Number} user_lon - The longitude of the user
  * @param {String} bus_no - Bus number
  * @param {String} bus_stop - Bus stop
- * @param {String} direction - Direction of bus encoded as "0" or "1"
  * @param {Object} route_model - The schema of the stop database in Mongoose
  * @param {Object} stop_model - The schema of the stop database in Mongoose
  * @example
- * var heuristics = new heuristics_controller = function(lat, lon, bus_no, bus_stop, direction, route_model, stop_model);
+ * var heuristics = new heuristics_controller = function(lat, lon, bus_no, bus_stop, route_model, stop_model);
  */
-var heuristics_controller = function(lat, lon, bus_no, bus_stop, direction, route_model, stop_model) {
+var heuristics_controller = function(lat, lon, bus_no, bus_stop, route_model, stop_model) {
 	this.lat = lat;
 	this.lon = lon;
 	this.bus_no = bus_no;
 	this.bus_stop = bus_stop;
-	this.direction = direction;
 	this.route_model = route_model;
 	this.stop_model = stop_model;
 	this.api_error_messages = require('../models/api_error_messages.js');
@@ -66,7 +64,10 @@ heuristics_controller.prototype.query = function(query_bus_no, callback) {
 		}
 
 		var f = 0;
-		var dt = new Date();
+		var currentTime = new Date();
+		var currentOffset = currentTime.getTimezoneOffset();
+		var ISTOffset = 330;   // IST offset UTC +5:30
+		var dt = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
 		var curr_time = dt.getSeconds() + (60 * dt.getMinutes()) + (60 * 60 * dt.getHours());
 
 		for (var i = 0; i < route.timings.length; i++) {
@@ -214,9 +215,6 @@ heuristics_controller.prototype.update_timing = function(stop_no, bus_no, time, 
 
 		if (f == -1) f = route.timings.length - 1;
 
-		// console.log(f);
-		// console.log(route.timings[f]);
-		// console.log(time);
 
 		route.timings[f] = 0.8 * route.timings[f] + 0.2 * time;
 
@@ -278,7 +276,12 @@ heuristics_controller.prototype.update = function(callback) {
 
 			var lock = true;
 
-			var dt = new Date();
+
+			var currentTime = new Date();
+			var currentOffset = currentTime.getTimezoneOffset();
+			var ISTOffset = 330;   // IST offset UTC +5:30
+			var dt = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
+
 			var curr_time = dt.getSeconds() + (60 * dt.getMinutes()) + (60 * 60 * dt.getHours());
 
 			me.find_bus_stop_location(me.bus_no, i, function(err, resp) {

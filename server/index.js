@@ -237,7 +237,7 @@ router.route("/heuristics")
 		var bus_no = req.body.bus_no;
 		var bus_stop = req.body.bus_stop;
 
-		var heuristics = new heuristics_controller(lat, lon, bus_no, bus_stop, direction, Route_model, Stop_model);
+		var heuristics = new heuristics_controller(lat, lon, bus_no, bus_stop, Route_model, Stop_model);
 
 		// Perform update using collected data
 		heuristics.update(function(err, resp) {

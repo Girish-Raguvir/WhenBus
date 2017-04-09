@@ -285,7 +285,6 @@ BusController.prototype.findBus = function(callback) {
 		0.0,
 		null,
 		stops_near_user[best_user_stop].stop_id,
-		null,
 		me.route_model,
 		me.stop_model);
 
