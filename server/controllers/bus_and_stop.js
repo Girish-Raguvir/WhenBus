@@ -333,9 +333,9 @@ BusController.prototype.findBus = function(callback) {
 			});
 		} else {
 			user_stop_return = {
-				"lat": stop.gps_lat,
-				"lon": stop.gps_lon,
-				"name" : stop.stop_name
+				"lat": stop[0].gps_lat,
+				"lon": stop[0].gps_lon,
+				"name" : stop[0].stop_name
 			}
 		}
 		locked = false;
