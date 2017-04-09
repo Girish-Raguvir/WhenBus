@@ -26,6 +26,7 @@
     "jsonwebtoken": "^7.3.0",
     "mongoose": "^4.8.7",
     "morgan": "^1.8.1",
-    "node-uuid": "^1.4.7"
+    "node-uuid": "^1.4.7",
+    "deasync": "^0.1.9"
   }
 }
