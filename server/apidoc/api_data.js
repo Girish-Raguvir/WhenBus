@@ -80,6 +80,13 @@ define({ "api": [
           },
           {
             "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "payload.stop_name",
+            "description": "<p>Name of best bus stop for User</p>"
+          },
+          {
+            "group": "Success 200",
             "type": "Object[]",
             "optional": false,
             "field": "payload.bus_details",
@@ -394,5 +401,61 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "server/index.js",
     "groupTitle": "User"
+  },
+  {
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "varname1",
+            "description": "<p>No type.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "varname2",
+            "description": "<p>With type.</p>"
+          }
+        ]
+      }
+    },
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "server/apidoc/main.js",
+    "group": "_home_rahul_iit_acads_Sem6_Software_eng_WhenBus_server_apidoc_main_js",
+    "groupTitle": "_home_rahul_iit_acads_Sem6_Software_eng_WhenBus_server_apidoc_main_js",
+    "name": ""
+  },
+  {
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "varname1",
+            "description": "<p>No type.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "varname2",
+            "description": "<p>With type.</p>"
+          }
+        ]
+      }
+    },
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "server/static/apidoc/main.js",
+    "group": "_home_rahul_iit_acads_Sem6_Software_eng_WhenBus_server_static_apidoc_main_js",
+    "groupTitle": "_home_rahul_iit_acads_Sem6_Software_eng_WhenBus_server_static_apidoc_main_js",
+    "name": ""
   }
 ] });

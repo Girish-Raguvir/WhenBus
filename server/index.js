@@ -173,6 +173,7 @@ router.route("/users/login")
  * @apiSuccess {Object} payload Payload Present if succesful registration
  * @apiSuccess {Number} payload.stop_lat Latitude of best bus stop for User
  * @apiSuccess {Number} payload.stop_lat Longiture of best bus stop for User
+ * @apiSuccess {Number} payload.stop_name Name of best bus stop for User
  * @apiSuccess {Object[]} payload.bus_details The buses and associate arrival times
  * @apiSuccess {String} payload.bus_details.bus_no Bus No. that user can board
  * @apiSuccess {String} payload.bus_details.arrival_time The expected arrival time of the corresponding bus

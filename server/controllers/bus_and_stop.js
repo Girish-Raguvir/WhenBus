@@ -334,7 +334,8 @@ BusController.prototype.findBus = function(callback) {
 		} else {
 			user_stop_return = {
 				"lat": stop.gps_lat,
-				"lon": stop.gps_lon
+				"lon": stop.gps_lon,
+				"name" : stop.stop_name
 			}
 		}
 		locked = false;
@@ -350,6 +351,7 @@ BusController.prototype.findBus = function(callback) {
 		payload: {
 			stop_lat: user_stop_return.lat,
 			stop_lon: user_stop_return.lon,
+			stop_name: user_stop_return.name,
 			bus_details: bus_and_timings
 		}
 	});
