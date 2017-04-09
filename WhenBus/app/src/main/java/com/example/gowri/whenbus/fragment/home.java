@@ -130,6 +130,9 @@ public class home extends Fragment implements LocationListener{
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == R.id.search || actionId== EditorInfo.IME_NULL) {
                     if(event.getAction() == KeyEvent.ACTION_DOWN) {
+                        //speed detect
+                        Home home = (Home) getActivity();
+                        home.startbackground();
 
                         //Get user current location
                         if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -143,7 +146,6 @@ public class home extends Fragment implements LocationListener{
                         destination dest = new destination(v.getText().toString());
                         dest.execute((Void) null);
 
-//                        loadparallax();
                     }
 
 

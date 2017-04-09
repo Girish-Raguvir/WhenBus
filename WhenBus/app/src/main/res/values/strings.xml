@@ -40,4 +40,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_parallax">Parallax</string>
+    <string name="local_service_started">\"Local service started\"</string>
+    <string name="local_service_stopped">Local service stoped</string>
+    <string name="local_service_label">local service</string>
 </resources>

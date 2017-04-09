@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
-    LocationListener locationListener;
     LocationManager locationManager;
     String provider;
     TextView tv;
@@ -54,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
         Location location = locationManager.getLastKnownLocation(provider);
         locationManager.requestLocationUpdates(10, 0, criteria, this, null);
+
+        speed_detect.mNM.cancel(speed_detect.NOTIFICATION);
     }
 
 
