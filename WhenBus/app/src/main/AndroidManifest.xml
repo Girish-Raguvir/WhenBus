@@ -44,6 +44,9 @@
             android:name=".Parallax"
             android:label="@string/title_activity_parallax"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".MainActivity"
+            android:label="Main"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

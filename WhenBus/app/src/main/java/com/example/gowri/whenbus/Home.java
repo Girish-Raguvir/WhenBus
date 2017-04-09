@@ -126,7 +126,6 @@ public class Home extends AppCompatActivity
     public void loadmap(){
         Intent intent = new Intent(Home.this,MapsActivity.class);
         startActivity(intent);
-        finish();
     }
 
 
