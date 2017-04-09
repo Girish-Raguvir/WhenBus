@@ -15,18 +15,19 @@ Run script to load the data into the DBMS:
 Then deploy via heroku(runs on port 5000 for below command)
 	
 	heroku local web
-
-The requests(GET/POST) are :
-* POST - /users/register
-* POST - /users/login
-* POST - /bus
-* GET - /
+	#Alternately
+	# cd server && node index.js
+	  
 
 Run APIDOC/JSDoc Using :
 
 	./create_doc.sh
 
-
 APIDOC found at:
 
-	http://whenbus-api-doc.s3-website.ap-south-1.amazonaws.com/
+	https://cs3410-whenbus.herokuapp.com/api
+	https://cs3410-whenbus.herokuapp.com/docs
+
+To  run units test run
+	
+	./run_test.sh
