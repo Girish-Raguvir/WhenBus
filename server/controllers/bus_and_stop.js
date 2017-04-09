@@ -172,7 +172,7 @@ BusController.prototype.getKNearestStop = function(busstops, ref_loc, k) {
  * Checks if bus requested is valid, and finds the bus stop closest to to the user via which requested bus passes through
  * @param {Array} callback - Callback function to execute(which returns a response) after closest stop is found
  * @example 
- * bus.findBus(function(err, resp) {res.json(response); });
+ * bus.findBus(function(err, resp) {........});
  */
 BusController.prototype.findBus = function(callback) {
 	var me = this;
@@ -362,7 +362,7 @@ BusController.prototype.findBus = function(callback) {
  * Get the endpoints of a particular bus stop
  * @param {Object} callback - Callback function to execute(which returns a response) after closest stop is found
  * @example 
- * bus.findBus(function(err, resp) {res.json(response); });
+ * bus.findBus("IITM1", function(err, resp) {.....});
  */
 BusController.prototype.getBusDirection = function(raw_bus, callback) {
 	var me = this;

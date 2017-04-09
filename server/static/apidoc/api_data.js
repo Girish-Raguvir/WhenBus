@@ -59,52 +59,166 @@ define({ "api": [
           },
           {
             "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Error message</p>"
-          },
-          {
-            "group": "Success 200",
             "type": "Object",
             "optional": false,
-            "field": "payload",
-            "description": "<p>Payload Present if succesful registration</p>"
+            "field": "message",
+            "description": "<p>Payload object</p>"
           },
           {
             "group": "Success 200",
             "type": "Number",
             "optional": false,
-            "field": "payload.stop_lat",
+            "field": "message.stop_lat",
             "description": "<p>Latitude of best bus stop for User</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "message.stop_name",
+            "description": "<p>Name of best bus stop for User</p>"
           },
           {
             "group": "Success 200",
             "type": "Object[]",
             "optional": false,
-            "field": "payload.bus_details",
+            "field": "message.bus_details",
             "description": "<p>The buses and associate arrival times</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "payload.bus_details.bus_no",
+            "field": "message.bus_details.bus_no",
             "description": "<p>Bus No. that user can board</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "payload.bus_details.arrival_time",
+            "field": "message.bus_details.arrival_time",
             "description": "<p>The expected arrival time of the corresponding bus</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "payload.msg",
+            "field": "message.msg",
             "description": "<p>Error code if failure/invalid parameters</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "server/index.js",
+    "groupTitle": "Query"
+  },
+  {
+    "type": "post",
+    "url": "/endstops",
+    "title": "Bus Direction",
+    "name": "Direction",
+    "group": "Query",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "bus_no",
+            "description": "<p>Bus no. without direction encoding</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{ \"bus_no\" : \"IITM1\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "description": "<p>The endpoint finds the two end destinations of the bus and describes which is forward and backward with respect to the database.</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Success/Failure Status</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Payload object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message.msg",
+            "description": "<p>Error code if failure/invalid parameters</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message.bus1",
+            "description": "<p>Details of the first bus</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message.bus1.bus_name",
+            "description": "<p>Name of the bus as per database</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message.bus1.start_stop",
+            "description": "<p>Name of the starting stop</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message.bus1.end_stop",
+            "description": "<p>Name of the ending stop</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message.bus2",
+            "description": "<p>Details of the first bus</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message.bus2.bus_name",
+            "description": "<p>Name of the bus as per database</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message.bus2.start_stop",
+            "description": "<p>Name of the starting stop</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message.bus2.end_stop",
+            "description": "<p>Name of the ending stop</p>"
           }
         ]
       }
@@ -176,20 +290,13 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>Error message</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "payload",
-            "description": "<p>Present if succesful registration</p>"
+            "description": "<p>Payload object</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "payload.msg",
+            "field": "message.msg",
             "description": "<p>Error code if failure/invalid parameters</p>"
           }
         ]
@@ -248,27 +355,20 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>Error message</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "payload",
-            "description": "<p>Payload Present if succesful registration</p>"
+            "description": "<p>Payload or message</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "payload.msg",
+            "field": "message.msg",
             "description": "<p>Error code if failure/invalid parameters</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "payload.user_profile",
+            "field": "message.user_profile",
             "description": "<p>Unique user profile for keeping track of user session</p>"
           }
         ]
@@ -334,27 +434,20 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>Error message</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "payload",
-            "description": "<p>Payload Present if succesful registration</p>"
+            "description": "<p>Payload</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "payload.msg",
+            "field": "message.msg",
             "description": "<p>Error code if failure/invalid parameters</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "payload.user_profile",
+            "field": "message.user_profile",
             "description": "<p>Unique user profile</p>"
           }
         ]
@@ -394,5 +487,33 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "server/index.js",
     "groupTitle": "User"
+  },
+  {
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "varname1",
+            "description": "<p>No type.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "varname2",
+            "description": "<p>With type.</p>"
+          }
+        ]
+      }
+    },
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "server/static/apidoc/main.js",
+    "group": "_home_rahul_iit_acads_Sem6_Software_eng_WhenBus_server_static_apidoc_main_js",
+    "groupTitle": "_home_rahul_iit_acads_Sem6_Software_eng_WhenBus_server_static_apidoc_main_js",
+    "name": ""
   }
 ] });
