@@ -34,7 +34,7 @@ for (i = 1; i <= 15; i++) {
 		stop_no: i,
 		timings: function get_timings() {
 			times = []
-			for(h=15; h<=20; h++){
+			for(h=6; h<=21; h++){
 				for(m=0; m<60; m=m+15){
 					var cur_h = h+ Math.floor((m+i)/60);
 					var cur_m = (m+i)%60;
@@ -54,7 +54,7 @@ for (i = 1; i <= 6; i++) {
 		stop_no: i,
 		timings: function get_timings() {
 			times = []
-			for(h=15; h<=20; h++){
+			for(h=6; h<=21; h++){
 				for(m=0; m<60; m=m+30){
 					var cur_h = h+ Math.floor((m+i)/60)
 					var cur_m = (m+i)%60
@@ -75,7 +75,7 @@ for (i = 1; i <= 15; i++) {
 		stop_no: i,
 		timings: function get_timings() {
 			times = []
-			for(h=15; h<=20; h++){
+			for(h=6; h<=21; h++){
 				for(m=0; m<60; m=m+15){
 					var cur_h = h+ Math.floor((m+i)/60)
 					var cur_m = (m+i)%60
@@ -96,7 +96,7 @@ for (i = 1; i <= 6; i++) {
 		stop_no: i,
 		timings: function get_timings() {
 			times = []
-			for(h=15; h<=20; h++){
+			for(h=6; h<=21; h++){
 				for(m=15; m<60; m=m+30){
 					var cur_h = h+ Math.floor((m+i)/60)
 					var cur_m = (m+i)%60
