@@ -257,6 +257,48 @@ router.route("/heuristics")
 
 	});
 
+/**
+ * @api {post} /endstops Bus Direction
+ * @apiName Direction
+ * @apiGroup Query
+ *
+ * @apiParam {String} bus_no Bus no. without direction encoding
+ *
+ * @apiParamExample {json} Request-Example:
+ *{ "bus_no" : "IITM1"}
+ * @apiDescription The endpoint finds the two end destinations of the bus and described which is forward and backward with respect to the database.
+ * @apiSuccess {Boolean} success Success/Failure Status
+ * @apiSuccess {String} message Error message
+ * @apiSuccess {Object} payload Present if succesful registration
+ * @apiSuccess {String} payload.msg Error code if failure/invalid parameters
+ */
+router.route("/endstops")
+	.post(function(req, res) {
+		var response = {};
+
+		// Get user input from crowdsourcing
+		var bus_no = req.body.bus_no;
+
+		var Bus = new BusController(0, 0, 0, 0, Stop_model, Bus_model, Route_model);
+
+		// Perform update using collected data
+		Bus.getBusDirection(bus_no, function(err, resp) {
+			if (err) {
+				response = {
+					"success": false,
+					"message": "Error"
+				};
+			} else {
+				response = {
+					"success": resp.success,
+					"message": resp.payload
+				};
+			}
+			res.json(response);
+		});
+
+	});
+
 var path = require('path');
 
 app.use(express.static(path.join(__dirname, 'static/apidoc')));

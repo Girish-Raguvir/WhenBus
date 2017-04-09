@@ -358,4 +358,85 @@ BusController.prototype.findBus = function(callback) {
 
 };
 
+/**
+ * Get the endpoints of a particular bus stop
+ * @param {Object} callback - Callback function to execute(which returns a response) after closest stop is found
+ * @example 
+ * bus.findBus(function(err, resp) {res.json(response); });
+ */
+BusController.prototype.getBusDirection = function(raw_bus, callback) {
+	var me = this;
+	var unlocked = false;
+	var start_stop ;
+	var end_stop ;
+
+	me.bus_model.find({bus_no : raw_bus + "_f"}, function(err, buses) {
+		if (err) {
+			return callback(err, {
+				success: false,
+				payload: {
+					msg: me.api_error_messages.database_error
+				}
+			});
+		} else {
+			start_stop = buses[0].start_stop_id,
+			end_stop =  buses[0].end_stop_id,
+			unlocked = true;
+		}
+	});
+
+	me.deasync.loopWhile(function() {
+		return !unlocked;
+	});
+
+	start_stop_list = [start_stop, end_stop];
+	bus_list = [raw_bus + "_f" , raw_bus + "_b"];
+	start_stop_names = [];
+	start_stop_gps_lat = [];
+	start_stop_gps_lon = [];
+
+	for (var i = 0; i < 2; ++i) {
+		unlocked = false;
+		me.stop_model.find({stop_id : start_stop_list[i]}, function(err, buses) {
+			if (err) {
+				return callback(err, {
+					success: false,
+					payload: {
+						msg: me.api_error_messages.database_error
+					}
+				});
+			} else {
+				start_stop_names.push(buses[0].stop_name);
+				start_stop_gps_lat.push(buses[0].gps_lat);
+				start_stop_gps_lon.push(buses[0].gps_lon);
+				unlocked = true;
+			}
+		});
+
+		me.deasync.loopWhile(function() {
+			return !unlocked;
+		});
+	}
+
+
+	return callback(0, {
+		success: true,
+		payload: {
+			bus1 : {
+				bus_name : bus_list[0],
+				start_stop : start_stop_names[0],
+				end_stop :start_stop_names[1]
+			},
+			bus2 : {
+				bus_name : bus_list[1],
+				start_stop : start_stop_names[1],
+				end_stop :start_stop_names[0]
+			}
+		}
+	});
+
+	
+
+};
+
 module.exports = BusController;
