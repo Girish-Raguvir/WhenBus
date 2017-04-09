@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({
  * @apiDescription Test endpoint that displays sample message for testing
  *
  * @apiSuccess {String} message Returns a welcome message on success
- * @apiSuccess {Boolean} error Success/Failure Status 
+ * @apiSuccess {Boolean} error Success/Failure Status
  */
 router.get("/", function(req, res) {
 	res.json({
@@ -120,7 +120,7 @@ router.route("/users/register")
  * @apiParamExample {json} Request-Example:
  *{ "email" : "sample@iitm.ac.in", "password" : "simple"}
  *
- * @apiDescription Endpoint for user log-in. Returns a unique token or a error message based on successful/failed login attempt. 
+ * @apiDescription Endpoint for user log-in. Returns a unique token or a error message based on successful/failed login attempt.
  * @apiSuccess {Boolean} success Success/Failure Status
  * @apiSuccess {String} message Error message
  * @apiSuccess {Object} payload Payload Present if succesful registration
@@ -258,10 +258,14 @@ router.route("/heuristics")
 
 var path = require('path');
 
-app.use(express.static(path.join(__dirname, 'apidoc')));
+app.use(express.static(path.join(__dirname, 'static/apidoc')));
+router.get("/api", function(req, res) {
+	res.sendFile(path.join(__dirname + '/static/apidoc/index.html'));
+});
 
+app.use(express.static(path.join(__dirname, 'static/servdoc')));
 router.get("/docs", function(req, res) {
-	res.sendFile(path.join(__dirname + '/apidoc/index.html'));
+	res.sendFile(path.join(__dirname + '/static/servdoc/index.html'));
 });
 
 
