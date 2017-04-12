@@ -75,6 +75,13 @@
             "group": "Success 200",
             "type": "Number",
             "optional": false,
+            "field": "message.stop_id",
+            "description": "<p>ID of best bus stop for User</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
             "field": "message.stop_name",
             "description": "<p>Name of best bus stop for User</p>"
           },
@@ -90,6 +97,13 @@
             "type": "String",
             "optional": false,
             "field": "message.bus_details.bus_no",
+            "description": "<p>Bus No. that user can board</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message.bus_details.bus_id",
             "description": "<p>Bus No. that user can board</p>"
           },
           {
