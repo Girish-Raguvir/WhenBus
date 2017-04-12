@@ -34,12 +34,12 @@ app.use(bodyParser.urlencoded({
  * @apiSuccess {String} message Returns a welcome message on success
  * @apiSuccess {Boolean} error Success/Failure Status
  */
-router.get("/", function(req, res) {
-	res.json({
-		"error": false,
-		"message": "Welcome to WhenBus!"
-	});
-});
+// router.get("/", function(req, res) {
+// 	res.json({
+// 		"error": false,
+// 		"message": "Welcome to WhenBus!"
+// 	});
+// });
 
 /**
  * @api {post} /users/register Register
@@ -55,7 +55,7 @@ router.get("/", function(req, res) {
  *
  * @apiDescription Endpoint for registering previously non-existent users. Ensures that user is not already registered and accordingly create a new entry in the database
  * @apiSuccess {Boolean} success Success/Failure Status
- * @apiSuccess {String} message Payload 
+ * @apiSuccess {String} message Payload
  * @apiSuccess {String} message.msg Error code if failure/invalid parameters
  * @apiSuccess {String} message.user_profile Unique user profile
  */
@@ -304,16 +304,21 @@ router.route("/endstops")
 
 var path = require('path');
 
+app.use(express.static(path.join(__dirname, 'static/landing')));
+
+router.get("/", function(req, res) {
+	res.sendFile(path.join(__dirname + '/static/landing/index.html'));
+});
+
 app.use(express.static(path.join(__dirname, 'static/apidoc')));
 router.get("/api", function(req, res) {
 	res.sendFile(path.join(__dirname + '/static/apidoc/index.html'));
 });
-
+//
 app.use(express.static(path.join(__dirname, 'static/servdoc')));
 router.get("/docs", function(req, res) {
 	res.sendFile(path.join(__dirname + '/static/servdoc/index.html'));
 });
-
 
 app.use('/', router);
 
