@@ -169,10 +169,12 @@ router.route("/users/login")
  * @apiSuccess {Boolean} success Success/Failure Status
  * @apiSuccess {Object} message Payload object
  * @apiSuccess {Number} message.stop_lat Latitude of best bus stop for User
- * @apiSuccess {Number} message.stop_lat Longiture of best bus stop for User
+ * @apiSuccess {Number} message.stop_lat Longitude of best bus stop for User
+ * @apiSuccess {Number} message.stop_id ID of best bus stop for User
  * @apiSuccess {Number} message.stop_name Name of best bus stop for User
  * @apiSuccess {Object[]} message.bus_details The buses and associate arrival times
  * @apiSuccess {String} message.bus_details.bus_no Bus No. that user can board
+ * @apiSuccess {String} message.bus_details.bus_id Bus No. that user can board
  * @apiSuccess {String} message.bus_details.arrival_time The expected arrival time of the corresponding bus
  * @apiSuccess {String} message.msg Error code if failure/invalid parameters
  */
