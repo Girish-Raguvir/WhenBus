@@ -293,6 +293,12 @@ BusController.prototype.findBus = function(callback) {
 
 	console.log("Calculating Heuristics..");
 
+	var currentTime = new Date();
+	var currentOffset = currentTime.getTimezoneOffset();
+	var ISTOffset = 330;   // IST offset UTC +5:30
+	var dt = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
+	var curr_time = dt.getSeconds() + (60 * dt.getMinutes()) + (60 * 60 * dt.getHours());
+
 	stops_near_user[best_user_stop].bus_list.forEach(function(cur_bus) {
 
 		var ret_val = null;
@@ -310,10 +316,12 @@ BusController.prototype.findBus = function(callback) {
 				}
 			});
 		} else {
-			bus_and_timings.push({
-				"bus_no": cur_bus,
-				"arrival_time": ret_val.payload.time
-			});
+			if(ret_val.payload.time){
+				bus_and_timings.push({
+					"bus_no": cur_bus,
+					"arrival_time": ret_val.payload.time
+				});
+			}
 		}
 	});
 

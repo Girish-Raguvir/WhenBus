@@ -63,7 +63,7 @@ heuristics_controller.prototype.query = function(query_bus_no, callback) {
 			});
 		}
 
-		var f = 0;
+		var f = -1;
 		var currentTime = new Date();
 		var currentOffset = currentTime.getTimezoneOffset();
 		var ISTOffset = 330;   // IST offset UTC +5:30
@@ -77,7 +77,10 @@ heuristics_controller.prototype.query = function(query_bus_no, callback) {
 			}
 		}
 
-		time_bus = String(Math.floor(route.timings[f] / 3600)) + ":" + String(Math.floor((route.timings[f] % 3600) / 60))
+		if(f!=-1)
+			time_bus = String(Math.floor(route.timings[f] / 3600)) + ":" + String(Math.floor((route.timings[f] % 3600) / 60))
+		else
+			time_bus = null
 		lock = false;
 
 	});
