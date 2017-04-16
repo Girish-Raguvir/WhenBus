@@ -12,5 +12,6 @@ api_error_messages.user_create_error = 5;
 api_error_messages.bus_not_found = 6;
 api_error_messages.no_nearby_stop = 7;
 api_error_messages.bus_stop_not_found = 8;
+api_error_messages.route_not_found = 9;
 
 module.exports = api_error_messages;

@@ -54,11 +54,11 @@ heuristics_controller.prototype.query = function(query_bus_no, callback) {
 			});
 		}
 
-		if (!route.length) {
+		if (!route) {
 			return callback({
 				success: false,
 				payload: {
-					msg: me.api_error_messages.bus_stop_not_found
+					msg: me.api_error_messages.route_not_found
 				}
 			});
 		}
@@ -260,6 +260,15 @@ heuristics_controller.prototype.update = function(callback) {
 				success: false,
 				payload: {
 					msg: me.api_error_messages.database_error
+				}
+			});
+		}
+
+		if (!route) {
+			return callback({
+				success: false,
+				payload: {
+					msg: me.api_error_messages.route_not_found
 				}
 			});
 		}
