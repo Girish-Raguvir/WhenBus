@@ -381,9 +381,19 @@ BusController.prototype.getBusDirection = function(raw_bus, callback) {
 				}
 			});
 		} else {
-			start_stop = buses[0].start_stop_id,
-			end_stop =  buses[0].end_stop_id,
-			unlocked = true;
+			if(!buses.length){
+				return callback(err, {
+					success: false,
+					payload: {
+						msg: me.api_error_messages.bus_not_found
+					}
+				});
+			}
+			else{
+				start_stop = buses[0].start_stop_id,
+				end_stop =  buses[0].end_stop_id,
+				unlocked = true;
+			}
 		}
 	});
 
