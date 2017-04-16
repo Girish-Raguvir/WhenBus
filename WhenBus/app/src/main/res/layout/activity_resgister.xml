@@ -67,7 +67,7 @@
             android:textColorHint="@color/Login_text"
             android:maxLines="1" />
 
-        <!-- Login Button -->
+        <!-- login Button -->
 
         <Button
             android:id="@+id/btnRegister"
@@ -78,7 +78,7 @@
             android:text="@string/btn_register"
             android:textColor="@color/black" />
 
-        <!-- Link to Login Screen -->
+        <!-- Link to login Screen -->
 
         <Button
             android:id="@+id/btnLinkToLoginScreen"

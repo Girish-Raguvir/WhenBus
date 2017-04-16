@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/Login_background"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="10dp"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:src="@mipmap/login"
+        android:layout_weight="0.32"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -41,7 +50,7 @@
             android:textColorHint="@color/Login_text"
             android:maxLines="1" />
 
-        <!-- Login Button -->
+        <!-- login Button -->
 
         <Button
             android:id="@+id/email_sign_in_button"
@@ -52,7 +61,7 @@
             android:text="@string/btn_login"
             android:textColor="@color/black" />
 
-        <!-- Link to Login Screen -->
+        <!-- Link to login Screen -->
 
         <Button
             android:id="@+id/btnLinkToRegisterScreen"

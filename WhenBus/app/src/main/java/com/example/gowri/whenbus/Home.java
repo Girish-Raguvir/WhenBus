@@ -1,5 +1,6 @@
 package com.example.gowri.whenbus;
 
+import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -34,12 +35,19 @@ public class Home extends AppCompatActivity
     private Intent service_intent=null;
     private boolean mIsBound=false;
 
+    public ProgressDialog pDialog;
+
+    public static boolean background_started = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_home);
+
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
 
         session = new LoginSession(getApplicationContext());
 
@@ -54,14 +62,6 @@ public class Home extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                loadmap();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -89,8 +89,6 @@ public class Home extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
 
@@ -101,11 +99,6 @@ public class Home extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -115,18 +108,14 @@ public class Home extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if(id == R.id.logout){
+            session.setLogin(false);
+            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(intent);
+        }
+        if(id == R.id.about_us){
+            Intent intent = new Intent(getApplicationContext(),about_us.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -168,11 +157,15 @@ public class Home extends AppCompatActivity
             }
         };
 
-        if(service_intent!=null)
+        if(service_intent!=null) {
             stopService(service_intent);
+            service_intent = null;
+        }
         service_intent = new Intent(this,speed_detect.class);
         doBindService();
+        background_started = true;
         startService(service_intent);
+        //stopService(service_intent);
     }
 
     void doBindService() {
@@ -197,5 +190,22 @@ public class Home extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         doUnbindService();
+    }
+
+    public boolean getstatus(){
+        return background_started;
+    }
+
+    public void setstatus(boolean val){
+        background_started = val;
+    }
+
+    public void setprogress(boolean t,String msg){
+        if(t){
+            pDialog.setMessage(msg);
+            pDialog.show();
+        }else{
+            pDialog.dismiss();
+        }
     }
 }

@@ -88,12 +88,15 @@ public class home extends Fragment implements LocationListener{
     LocationManager locationManager;
     String provider;
     Criteria criteria;
-    static double dest_lon,dest_lat,user_lat,user_lon;
+    public static double dest_lon,dest_lat,user_lat,user_lon;
 
     public static double nearby_lat,nearby_lon;
     public static String nearby_name;
+    public static String nearby_id;
 
-    private static JSONArray buslist;
+    public static JSONArray buslist;
+
+    public static boolean background_start = false;
 
     public home() {
         // Required empty public constructor
@@ -114,14 +117,10 @@ public class home extends Fragment implements LocationListener{
 
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-        locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-        criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        provider = locationManager.getBestProvider(criteria, false);
-        if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-        }
-        locationManager.requestLocationUpdates(10, 0, criteria, this, null);
+//
+//        if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//        }
 
         search = (EditText)v.findViewById(R.id.search);
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -130,17 +129,21 @@ public class home extends Fragment implements LocationListener{
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == R.id.search || actionId== EditorInfo.IME_NULL) {
                     if(event.getAction() == KeyEvent.ACTION_DOWN) {
-                        //speed detect
-                        Home home = (Home) getActivity();
-                        home.startbackground();
+                        // Progress
+                        Home home = (Home)getActivity();
+                        home.setprogress(true,"Loading...");
+
 
                         //Get user current location
+                        locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+                        criteria = new Criteria();
+                        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+                        provider = locationManager.getBestProvider(criteria, false);
                         if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             // TODO: Consider calling
                         }
-                        Location location = locationManager.getLastKnownLocation(provider);
-                        user_lat = location.getLatitude();
-                        user_lon = location.getLongitude();
+                        locationManager.requestLocationUpdates(5, 0, criteria, home.this, null);
+
 
                         //HTTP request for lat and lng of destination
                         destination dest = new destination(v.getText().toString());
@@ -159,7 +162,10 @@ public class home extends Fragment implements LocationListener{
 
     private void loadparallax(){
 
-
+        if(buslist==null){
+            Toast.makeText(getActivity().getApplicationContext(),"No buses found",Toast.LENGTH_LONG).show();
+            return;
+        }
 
         FrameLayout frame = (FrameLayout) v.findViewById(R.id.search_frame);
         if(frame.getVisibility()==View.INVISIBLE){
@@ -176,7 +182,6 @@ public class home extends Fragment implements LocationListener{
         View listHeader = inflater.inflate(R.layout.list_header, null);
         stickyViewSpacer = listHeader.findViewById(R.id.stickyViewPlaceholder);
 
-        View bus_stop = listHeader.findViewById(R.id.bus_stop);
         heroImageView.setText("Nearby stop:\n"+nearby_name);
         heroImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,16 +235,31 @@ public class home extends Fragment implements LocationListener{
 
         /* Populate the ListView with sample data */
         List<String> modelList = new ArrayList<>();
-        for (int i = 0; i < buslist.length(); i++) {
-            try {
-                modelList.add("Bus No " + buslist.getJSONObject(i).getString("bus_no") +"\nETA "+buslist.getJSONObject(i).getString("arrival_time")+" hrs");
-            } catch (JSONException e) {
-                e.printStackTrace();
+
+        {
+
+            for (int i = 0; i < buslist.length(); i++) {
+                try {
+                    modelList.add("Bus No " + buslist.getJSONObject(i).getString("bus_no").replace("_f"," ").replace("_b"," ") +"\nETA "+buslist.getJSONObject(i).getString("arrival_time")+" hrs");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
+
+            ArrayAdapter adapter = new ArrayAdapter(getActivity().getApplicationContext(), R.layout.list_row,modelList);
+            listView.setAdapter(adapter);
+
+            //Stop progress
+            Home home = (Home) getActivity();
+            home.setprogress(false,"");
+
+            //speed detect
+            home.startbackground();
+
         }
 
-        ArrayAdapter adapter = new ArrayAdapter(getActivity().getApplicationContext(), R.layout.list_row,modelList);
-        listView.setAdapter(adapter);
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -307,7 +327,6 @@ public class home extends Fragment implements LocationListener{
         @Override
         protected Boolean doInBackground(Void... params) {
 
-
             String url = "https://cs3410-whenbus.herokuapp.com/bus";
             JSONObject user_log = new JSONObject();
 
@@ -330,6 +349,7 @@ public class home extends Fragment implements LocationListener{
                         nearby_lat = jsonObject.getJSONObject("message").getDouble("stop_lat");
                         nearby_lon = jsonObject.getJSONObject("message").getDouble("stop_lon");
                         nearby_name = jsonObject.getJSONObject("message").getString("stop_name");
+                        nearby_id = jsonObject.getJSONObject("message").getString("stop_id");
                         buslist = jsonObject.getJSONObject("message").getJSONArray("bus_details");
                         Log.d("Search_results",nearby_name);
                         Log.d("Search_results",buslist.toString());
@@ -372,7 +392,7 @@ public class home extends Fragment implements LocationListener{
 
     private class destination extends AsyncTask<Void, Void, Boolean> {
 
-        private final String dest;
+        private String dest;
 
         destination(String dest) {
             this.dest = dest;
@@ -380,11 +400,33 @@ public class home extends Fragment implements LocationListener{
 
         @Override
         protected Boolean doInBackground(Void... params) {
+
+            if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+            }
+
+            Location location = locationManager.getLastKnownLocation(provider);
+            if(location==null){
+                Log.d("Location","Couldn't get location");
+            }
+            else {
+                Log.d("Location","Got location");
+            }
+
+            if(location==null) {
+                user_lat = 12.988683;
+                user_lon = 80.229527;
+            }else{
+                user_lat = location.getLatitude();
+                user_lon = location.getLongitude();
+            }
+
+
             success = false;
             req = false;
 
-            dest.replace(" ","%20");
-            String url = "http://maps.google.com/maps/api/geocode/json?address=crc%20bus%20stop%20iit%20madras&sensor=false";
+            dest = dest.replace(" ","%20");
+            String url = "http://maps.google.com/maps/api/geocode/json?address="+dest+"&sensor=false";
 
             JsonObjectRequest get_dest_lat_lon = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
                 @Override

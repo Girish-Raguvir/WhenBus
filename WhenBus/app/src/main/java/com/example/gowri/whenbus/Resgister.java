@@ -32,6 +32,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -215,6 +216,7 @@ public class Resgister extends Activity {
             this.mName = mName;
             mEmail = email;
             mPassword = password;
+
         }
 
         @Override
@@ -247,6 +249,12 @@ public class Resgister extends Activity {
                             if(error.getString("msg").equals("4")) {
                                 mEmailView.setError("Already exists");
                                 mEmailView.requestFocus();
+                            }else if(error.getString("msg").equals("5")){
+                                Toast.makeText(getApplicationContext(),"Couldn't create. Try Later!",Toast.LENGTH_LONG).show();
+                                mEmailView.setText("");
+                                mPasswordView.setText("");
+                                mCPasswordView.setText("");
+                                Resgister.this.mName.setText("");
                             }
                             success = false;
                             Log.i("Register","Fail");

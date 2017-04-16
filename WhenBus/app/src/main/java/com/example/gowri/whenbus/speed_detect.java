@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Icon;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,12 +15,12 @@ import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.gowri.whenbus.R;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class speed_detect extends Service implements LocationListener {
     //Location
@@ -28,6 +29,8 @@ public class speed_detect extends Service implements LocationListener {
     long prevTime;
     long startTime;
     double l[];
+
+    Timer timer;
 
     public static NotificationManager mNM;
 
@@ -55,15 +58,11 @@ public class speed_detect extends Service implements LocationListener {
         double t1= System.currentTimeMillis();
         Log.d("Speeds", String.valueOf(speed)+" "+String.valueOf(startTime)+" "+String.valueOf(t1)+" "+String.valueOf((t1-startTime)/1000));
 
-
-        if((t1-startTime)/1000>50){
-            Toast.makeText(getApplicationContext(),"timeout",Toast.LENGTH_LONG).show();
-            stoptheservice();
+        if(speed>0 && Home.background_started==true){
+            showNotification();
+            Toast.makeText(getApplicationContext(),"flag working",Toast.LENGTH_LONG).show();
+            Home.background_started=(false);
         }
-    }
-
-    private void stoptheservice() {
-        this.stopSelf();
     }
 
     @Override
@@ -97,7 +96,7 @@ public class speed_detect extends Service implements LocationListener {
         mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
         // Display a notification about us starting.  We put an icon in the status bar.
-        showNotification();
+//        showNotification();
 
 
         l = new double[2];
@@ -117,6 +116,9 @@ public class speed_detect extends Service implements LocationListener {
         }
         locationManager.requestLocationUpdates(10, 0, criteria, this, null);
         startTime = System.currentTimeMillis();
+
+        timer = new Timer();
+        timer.schedule(new timeout(),900000);
     }
 
     @Override
@@ -147,20 +149,20 @@ public class speed_detect extends Service implements LocationListener {
      */
     private void showNotification() {
         // In this sample, we'll use the same text for the ticker and the expanded notification
-        CharSequence text = getText(R.string.local_service_started);
+        CharSequence text = "Crowd source on a click and contribute";
 
         // The PendingIntent to launch our activity if the user selects this notification
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+                new Intent(this, Crowdsourcing.class), 0);
 
         // Set the info for the views that show in the notification panel.
         Notification notification = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             notification = new Notification.Builder(this)
-                    .setSmallIcon(R.drawable.side_nav_bar)  // the status icon
+                    .setSmallIcon(R.mipmap.ic_launcher)  // the status icon
                     .setTicker(text)  // the status text
                     .setWhen(System.currentTimeMillis())  // the time stamp
-                    .setContentTitle(getText(R.string.local_service_label))  // the label of the entry
+                    .setContentTitle("WhenBus Crowdsource")  // the label of the entry
                     .setContentText(text)  // the contents of the entry
                     .setContentIntent(contentIntent)  // The intent to send when the entry is clicked
                     .build();
@@ -170,5 +172,13 @@ public class speed_detect extends Service implements LocationListener {
         mNM.notify(NOTIFICATION, notification);
     }
 
+    public class timeout extends TimerTask{
 
+        @Override
+        public void run() {
+            Log.d("Timer","evaluating");
+            speed_detect.this.stopSelf();
+            timer.cancel();
+        }
+    }
 }

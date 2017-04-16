@@ -58,7 +58,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Login session manager
+        //login session manager
         loginSession = new LoginSession(getApplicationContext());
 
         //Check state
@@ -141,7 +141,7 @@ public class LoginActivity extends Activity {
 
         // Check for a valid password, if the user entered one.
         if (!cancel && !TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            Log.d("Login","Password error");
+            Log.d("login","Password error");
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Login_background"
+    tools:context="com.example.gowri.whenbus.about_us">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:background="@color/Login_textbox"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_weight="0.07"
+            android:text="Backend"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07"
+            android:drawableRight="@mipmap/giri"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Girish Raghuvir"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07"
+            android:drawableRight="@mipmap/rahul"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Rahul Ramesh"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:background="@color/Login_textbox"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_weight="0.07"
+            android:text="Android"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07"
+            android:drawableRight="@mipmap/sesha"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Seshagiri Rao"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07"
+            android:drawableRight="@mipmap/manoj"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Manoj Kasireddy"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07"
+            android:drawableRight="@mipmap/gowri"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Gowrisankar"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView8"
+            android:background="@color/Login_textbox"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_weight="0.07"
+            android:text="Contact Us @"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"/>
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.76"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Mail: whenbusiitm@gmail.com"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.19"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Phone: +91 9444706609 | +91 9840410343"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_weight="1.14"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
