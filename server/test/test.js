@@ -138,3 +138,60 @@ describe('User account', function() {
 		});
 	});
 });
+
+describe('Heuristic Update', function() {
+	// db_url = 'mongodb://girishraguvir:qwerty@ds129030.mlab.com:29030/whenbus'
+	url = 'localhost:3000'
+
+	var conn = mongoose.connection;
+
+	describe('Successful Update', function() {
+		it('Successful update', function(done) {
+			var profile = {
+				"gps_lon": 80.242446,
+				"gps_lat": 13.005970,
+				"bus_no": "IITM1_f",
+				"bus_stop": "15"
+			};
+
+			request(url)
+				.post('/heuristics')
+				.send(profile)
+				// end handles the response
+				.end(function(err, res) {
+					if (err) {
+						throw err;
+					}
+					res.status.should.be.equal(200);
+					res.body.message.msg.should.equal("success");
+					res.body.success.should.equal(true);
+					done();
+				});
+		});
+	});
+
+	describe('Failed Update', function() {
+		it('Successful update', function(done) {
+			var profile = {
+				"gps_lon": 80.242446,
+				"gps_lat": 13.005970,
+				"bus_no": "IITM1_f",
+				"bus_stop": "15"
+			};
+
+			request(url)
+				.post('/heuristics')
+				.send(profile)
+				// end handles the response
+				.end(function(err, res) {
+					if (err) {
+						throw err;
+					}
+					res.status.should.be.equal(200);
+					res.body.message.msg.should.equal("success");
+					res.body.success.should.equal(true);
+					done();
+				});
+		});
+	});
+});

@@ -54,7 +54,7 @@ heuristics_controller.prototype.query = function(query_bus_no, callback) {
 			});
 		}
 
-		if (!route) {
+		if (!route.length) {
 			return callback({
 				success: false,
 				payload: {
