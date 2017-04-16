@@ -336,7 +336,7 @@ app.get('/frontend_docs', function (req, res) {
 });
 
 app.get('/requirements', function (req, res) {
-   var file = path.join(__dirname, '/static/pdf-sample.pdf');
+   var file = path.join(__dirname, '/static/documentation.pdf');
 	 fs.readFile(file , function (err,data){
 		 if (err) {
 					console.log(err);
