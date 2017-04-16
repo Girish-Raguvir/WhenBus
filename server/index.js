@@ -6,6 +6,7 @@ var router = express.Router();
 
 var uuid = require('node-uuid');
 var crypto = require('crypto');
+var fs = require('fs');
 
 var account_controller = require("./controllers/account.js")
 var BusController = require('./controllers/bus_and_stop.js')
@@ -318,8 +319,32 @@ router.get("/api", function(req, res) {
 });
 //
 app.use(express.static(path.join(__dirname, 'static/servdoc')));
-router.get("/docs", function(req, res) {
+router.get("/backend_docs", function(req, res) {
 	res.sendFile(path.join(__dirname + '/static/servdoc/index.html'));
+});
+
+app.get('/frontend_docs', function (req, res) {
+   var file = path.join(__dirname, '/static/pdf-sample.pdf');
+	 fs.readFile(file , function (err,data){
+		 if (err) {
+					console.log(err);
+			} else {
+					res.contentType("application/pdf");
+		      res.send(data);
+			}
+  });
+});
+
+app.get('/requirements', function (req, res) {
+   var file = path.join(__dirname, '/static/pdf-sample.pdf');
+	 fs.readFile(file , function (err,data){
+		 if (err) {
+					console.log(err);
+			} else {
+					res.contentType("application/pdf");
+		      res.send(data);
+			}
+  });
 });
 
 app.use('/', router);
