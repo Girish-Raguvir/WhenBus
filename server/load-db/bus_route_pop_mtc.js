@@ -111,10 +111,10 @@ for (i = 1; i <= 6; i++) {
 
 // MTC
 // 5E & 47A
-temp_stp3 = [26, 27, 28, 29, 30, 31, 32, 33, 34]
-temp_stp4 = [34, 33, 35, 43, 36, 37, 38, 39, 42]
+temp_stp3 = [0, 26, 27, 28, 29, 30, 31, 32, 33, 34]
 
-temp_stp6 = [34, 33, 35, 43, 36, 37, 38, 39, 40]
+temp_stp4 = [0, 34, 33, 35, 43, 36, 37, 38, 39, 42]
+temp_stp6 = [0, 34, 33, 35, 43, 36, 37, 38, 39, 40]
 
 
 for (i = 1; i <= 9; i++) {
@@ -149,7 +149,7 @@ for (i = 1; i <= 9; i++) {
 
 for (i = 1; i <= 9; i++) {
 	routes.push(new route_model({
-		bus_stop: String(function iden(y){ return temp_stp6[y];}(i)),
+		bus_stop: String(function iden(y){ return temp_stp3[y];}(i)),
 		bus_no: "599_f",
 		stop_no: i,
 		timings: function get_timings() {
@@ -194,7 +194,7 @@ for (i = 1; i <= 9; i++) {
 
 for (i = 1; i <= 9; i++) {
 	routes.push(new route_model({
-		bus_stop: String(function iden(y){ return temp_stp4[y];}(i)),
+		bus_stop: String(function iden(y){ return temp_stp6[y];}(i)),
 		bus_no: "599_b",
 		stop_no: i,
 		timings: function get_timings() {
