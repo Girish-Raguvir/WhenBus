@@ -268,7 +268,7 @@ stps.push(new stop_model({
 stps.push(new stop_model({
 	stop_id: "43",
 	stop_name: "Gandhinagar",
-	gps_lat: 13.0060759
+	gps_lat: 13.0060759,
 	gps_lon: 80.2512487
 }));
 
