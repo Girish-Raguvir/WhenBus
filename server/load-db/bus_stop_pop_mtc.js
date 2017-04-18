@@ -266,10 +266,17 @@ stps.push(new stop_model({
 }));
 
 stps.push(new stop_model({
-	stop_id: "35",
-	stop_name: "Adyar",
-	gps_lat: 13.0051873,
-	gps_lon: 80.2544137
+	stop_id: "43",
+	stop_name: "Gandhinagar",
+	gps_lat: 13.0060759
+	gps_lon: 80.2512487
+}));
+
+stps.push(new stop_model({
+	stop_id: "36",
+	stop_name: "Madhya Kailash",
+	gps_lat: 13.0062118,
+	gps_lon: 80.2477189
 }));
 
 stps.push(new stop_model({
