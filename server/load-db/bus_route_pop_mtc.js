@@ -119,7 +119,7 @@ for (i = 1; i <= 9; i++) {
 		stop_no: i,
 		timings: function get_timings() {
 			times = []
-			for(tim=60*60*5 + 2*(i-1)*60; tim<=60*60*14 + 60*30; tim=tim + 60*40 ){
+			for(tim=60*60*5 + 2*(i-1)*60; tim<=60*60*18 + 60*30; tim=tim + 60*40 ){
 				times.push(tim);
 			}
 			return times;
@@ -149,7 +149,7 @@ for (i = 1; i <= 9; i++) {
 		stop_no: i,
 		timings: function get_timings() {
 			times = []
-			for(tim=60*30 + 60*60*4 + 2*(i-1)*60; tim<=60*60*12 + 60*30; tim=tim + 60*40 ){
+			for(tim=60*30 + 60*60*4 + 2*(i-1)*60; tim<=60*60*19 + 60*30; tim=tim + 60*40 ){
 				times.push(tim);
 			}
 			return times;
@@ -164,7 +164,7 @@ for (i = 1; i <= 11; i++) {
 		stop_no: i,
 		timings: function get_timings() {
 			times = []
-			for(tim=60*5 + 60*60*5 + 2*(i-1)*60; tim<=60*60*14 + 60*30; tim=tim + 60*40 ){
+			for(tim=60*5 + 60*60*5 + 2*(i-1)*60; tim<=60*60*18 + 60*30; tim=tim + 60*40 ){
 				times.push(tim);
 			}
 			return times;
@@ -194,7 +194,7 @@ for (i = 1; i <= 11; i++) {
 		stop_no: i,
 		timings: function get_timings() {
 			times = []
-			for(tim=40*60 + 60*60*4 + 2*(i-1)*60; tim<=60*60*12 + 60*30; tim=tim + 60*40 ){
+			for(tim=40*60 + 60*60*4 + 2*(i-1)*60; tim<=60*60*19 + 60*30; tim=tim + 60*40 ){
 				times.push(tim);
 			}
 			return times;
