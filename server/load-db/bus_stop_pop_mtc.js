@@ -58,8 +58,8 @@ stps.push(new stop_model({
 stps.push(new stop_model({
 	stop_id: "4",
 	stop_name: "CRC Back1",
-	gps_lat: 12.987765, 
-	gps_lon: 80.231222
+	gps_lat: 12.988201,
+	gps_lon: 80.230079
 }));
 
 stps.push(new stop_model({
@@ -266,10 +266,17 @@ stps.push(new stop_model({
 }));
 
 stps.push(new stop_model({
-	stop_id: "35",
-	stop_name: "Adyar",
-	gps_lat: 13.0051873,
-	gps_lon: 80.2544137
+	stop_id: "43",
+	stop_name: "Gandhinagar",
+	gps_lat: 13.0060759
+	gps_lon: 80.2512487
+}));
+
+stps.push(new stop_model({
+	stop_id: "36",
+	stop_name: "Madhya Kailash",
+	gps_lat: 13.0062118,
+	gps_lon: 80.2477189
 }));
 
 stps.push(new stop_model({
@@ -282,8 +289,8 @@ stps.push(new stop_model({
 stps.push(new stop_model({
 	stop_id: "37",
 	stop_name: "IIT Madras Main Gate Bus Stop",
-	gps_lat: 13.0002963,
-	gps_lon: 80.2557202
+	gps_lat: 13.0061072,
+	gps_lon: 80.2428802
 }));
 
 stps.push(new stop_model({

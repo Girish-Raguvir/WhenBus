@@ -109,8 +109,13 @@ for (i = 1; i <= 6; i++) {
 	}));
 }
 
+// MTC
+// 5E & 47A
 temp_stp3 = [26, 27, 28, 29, 30, 31, 32, 33, 34]
-temp_stp4 = [34, 33, 35, 36, 37, 38, 39, 40, 41, 42]
+temp_stp4 = [34, 33, 35, 43, 36, 37, 38, 39, 42]
+
+temp_stp6 = [34, 33, 35, 43, 36, 37, 38, 39, 40]
+
 
 for (i = 1; i <= 9; i++) {
 	routes.push(new route_model({
@@ -119,7 +124,7 @@ for (i = 1; i <= 9; i++) {
 		stop_no: i,
 		timings: function get_timings() {
 			times = []
-			for(tim=60*60*5 + 2*(i-1)*60; tim<=60*60*14 + 60*30; tim=tim + 60*40 ){
+			for(tim=60*60*5 + 2*(i-1)*60; tim<=60*60*18 + 60*30; tim=tim + 60*40 ){
 				times.push(tim);
 			}
 			return times;
@@ -144,12 +149,12 @@ for (i = 1; i <= 9; i++) {
 
 for (i = 1; i <= 9; i++) {
 	routes.push(new route_model({
-		bus_stop: String(function iden(y){ return temp_stp3[y];}(i)),
+		bus_stop: String(function iden(y){ return temp_stp6[y];}(i)),
 		bus_no: "599_f",
 		stop_no: i,
 		timings: function get_timings() {
 			times = []
-			for(tim=60*30 + 60*60*4 + 2*(i-1)*60; tim<=60*60*12 + 60*30; tim=tim + 60*40 ){
+			for(tim=60*30 + 60*60*4 + 2*(i-1)*60; tim<=60*60*19 + 60*30; tim=tim + 60*40 ){
 				times.push(tim);
 			}
 			return times;
@@ -157,14 +162,14 @@ for (i = 1; i <= 9; i++) {
 	}));
 }
 
-for (i = 1; i <= 11; i++) {
+for (i = 1; i <= 9; i++) {
 	routes.push(new route_model({
 		bus_stop: String(function iden(y){ return temp_stp4[y];}(i)),
 		bus_no: "5E_b",
 		stop_no: i,
 		timings: function get_timings() {
 			times = []
-			for(tim=60*5 + 60*60*5 + 2*(i-1)*60; tim<=60*60*14 + 60*30; tim=tim + 60*40 ){
+			for(tim=60*5 + 60*60*5 + 2*(i-1)*60; tim<=60*60*18 + 60*30; tim=tim + 60*40 ){
 				times.push(tim);
 			}
 			return times;
@@ -172,7 +177,7 @@ for (i = 1; i <= 11; i++) {
 	}));
 }
 
-for (i = 1; i <= 11; i++) {
+for (i = 1; i <= 9; i++) {
 	routes.push(new route_model({
 		bus_stop: String(function iden(y){ return temp_stp4[y];}(i)),
 		bus_no: "47A_b",
@@ -187,14 +192,14 @@ for (i = 1; i <= 11; i++) {
 	}));
 }
 
-for (i = 1; i <= 11; i++) {
+for (i = 1; i <= 9; i++) {
 	routes.push(new route_model({
 		bus_stop: String(function iden(y){ return temp_stp4[y];}(i)),
 		bus_no: "599_b",
 		stop_no: i,
 		timings: function get_timings() {
 			times = []
-			for(tim=40*60 + 60*60*4 + 2*(i-1)*60; tim<=60*60*12 + 60*30; tim=tim + 60*40 ){
+			for(tim=40*60 + 60*60*4 + 2*(i-1)*60; tim<=60*60*19 + 60*30; tim=tim + 60*40 ){
 				times.push(tim);
 			}
 			return times;
