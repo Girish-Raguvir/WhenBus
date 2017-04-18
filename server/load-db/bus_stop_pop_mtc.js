@@ -282,8 +282,8 @@ stps.push(new stop_model({
 stps.push(new stop_model({
 	stop_id: "37",
 	stop_name: "IIT Madras Main Gate Bus Stop",
-	gps_lat: 13.0002963,
-	gps_lon: 80.2557202
+	gps_lat: 13.0061072,
+	gps_lon: 80.2428802
 }));
 
 stps.push(new stop_model({
