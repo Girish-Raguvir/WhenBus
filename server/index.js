@@ -324,7 +324,7 @@ router.get("/backend_docs", function(req, res) {
 });
 
 app.get('/frontend_docs', function (req, res) {
-   var file = path.join(__dirname, '/static/pdf-sample.pdf');
+   var file = path.join(__dirname, '/static/UI_documentation.pdf');
 	 fs.readFile(file , function (err,data){
 		 if (err) {
 					console.log(err);
