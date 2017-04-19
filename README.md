@@ -1,4 +1,4 @@
-# WhenBus - CS3400 Course Project
+# WhenBus - CS3410 Course Project
 
 - It’s a real time crowdsourcing app
 - Provides buses to desired destination 
