@@ -142,8 +142,8 @@ public class Home extends AppCompatActivity
                 mBoundService = ((speed_detect.LocalBinder)service).getService();
 
                 // Tell the user about this for our demo.
-                Toast.makeText(getApplicationContext(),"Connection started",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Connection started",
+                  //      Toast.LENGTH_SHORT).show();
             }
 
             public void onServiceDisconnected(ComponentName className) {
@@ -152,8 +152,8 @@ public class Home extends AppCompatActivity
                 // Because it is running in our same process, we should never
                 // see this happen.
                 mBoundService = null;
-                Toast.makeText(getApplicationContext(), "Connection stopped",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Connection stopped",
+                        //Toast.LENGTH_SHORT).show();
             }
         };
 
@@ -165,7 +165,6 @@ public class Home extends AppCompatActivity
         doBindService();
         background_started = true;
         startService(service_intent);
-        //stopService(service_intent);
     }
 
     void doBindService() {

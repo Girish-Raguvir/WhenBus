@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -45,22 +46,27 @@ public class speed_detect extends Service implements LocationListener {
         long t = location.getTime();
         float distance[] = new float[3];
         double speed;
+        double t1= System.currentTimeMillis();
+
         if(l!=null) {
+
             Location.distanceBetween(lat, lon, l[0], l[1], distance);
             speed = 1000 * distance[0] / (t - prevTime);
+            Log.d("Speeds", String.valueOf(speed)+" "+String.valueOf(startTime)+" "+String.valueOf(t1)+" "+String.valueOf((t1-startTime)/1000));
+
         }
-        else
+        else {
             speed = 0.0;
+            Log.d("Speeds", String.valueOf(speed)+" "+String.valueOf(startTime)+" "+String.valueOf(t1)+" "+String.valueOf((t1-startTime)/1000));
+
+        }
         l[0] = lat;
         l[1] = lon;
         prevTime = t;
 
-        double t1= System.currentTimeMillis();
-        Log.d("Speeds", String.valueOf(speed)+" "+String.valueOf(startTime)+" "+String.valueOf(t1)+" "+String.valueOf((t1-startTime)/1000));
 
         if(speed>0 && Home.background_started==true){
             showNotification();
-            Toast.makeText(getApplicationContext(),"flag working",Toast.LENGTH_LONG).show();
             Home.background_started=(false);
         }
     }
@@ -117,8 +123,8 @@ public class speed_detect extends Service implements LocationListener {
         locationManager.requestLocationUpdates(10, 0, criteria, this, null);
         startTime = System.currentTimeMillis();
 
-        timer = new Timer();
-        timer.schedule(new timeout(),900000);
+//        timer = new Timer();
+//        timer.schedule(new timeout(),900000);
     }
 
     @Override

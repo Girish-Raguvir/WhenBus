@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -129,20 +130,22 @@ public class home extends Fragment implements LocationListener{
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == R.id.search || actionId== EditorInfo.IME_NULL) {
                     if(event.getAction() == KeyEvent.ACTION_DOWN) {
-                        // Progress
-                        Home home = (Home)getActivity();
-                        home.setprogress(true,"Loading...");
-
 
                         //Get user current location
                         locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
                         criteria = new Criteria();
                         criteria.setAccuracy(Criteria.ACCURACY_FINE);
                         provider = locationManager.getBestProvider(criteria, false);
-                        if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            // TODO: Consider calling
-                        }
+                        if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET}
+                                        ,10);
+
                         locationManager.requestLocationUpdates(5, 0, criteria, home.this, null);
+
+                        // Progress
+                        Home home = (Home)getActivity();
+                        home.setprogress(true,"Loading...");
 
 
                         //HTTP request for lat and lng of destination
@@ -160,10 +163,15 @@ public class home extends Fragment implements LocationListener{
         return v;
     }
 
-    private void loadparallax(){
+    private void loadparallax(Boolean success){
 
-        if(buslist==null){
-            Toast.makeText(getActivity().getApplicationContext(),"No buses found",Toast.LENGTH_LONG).show();
+        if(!success){
+
+            FrameLayout frame = (FrameLayout) v.findViewById(R.id.search_frame);
+            if(frame.getVisibility()==View.VISIBLE){
+                frame.setVisibility(View.INVISIBLE);
+            }
+
             return;
         }
 
@@ -238,7 +246,8 @@ public class home extends Fragment implements LocationListener{
 
         {
 
-            for (int i = 0; i < buslist.length(); i++) {
+
+            for (int i = buslist.length()-1; i >=0; i--) {
                 try {
                     modelList.add("Bus No " + buslist.getJSONObject(i).getString("bus_no").replace("_f"," ").replace("_b"," ") +"\nETA "+buslist.getJSONObject(i).getString("arrival_time")+" hrs");
                 } catch (JSONException e) {
@@ -326,6 +335,7 @@ public class home extends Fragment implements LocationListener{
 
         @Override
         protected Boolean doInBackground(Void... params) {
+            success= false;
 
             String url = "https://cs3410-whenbus.herokuapp.com/bus";
             JSONObject user_log = new JSONObject();
@@ -346,17 +356,35 @@ public class home extends Fragment implements LocationListener{
                 public void onResponse(JSONObject jsonObject) {
                     Log.d("Search_query_output",jsonObject.toString());
                     try {
-                        nearby_lat = jsonObject.getJSONObject("message").getDouble("stop_lat");
+                        if (jsonObject.getString("success").equals("true")){
+                            nearby_lat = jsonObject.getJSONObject("message").getDouble("stop_lat");
                         nearby_lon = jsonObject.getJSONObject("message").getDouble("stop_lon");
                         nearby_name = jsonObject.getJSONObject("message").getString("stop_name");
                         nearby_id = jsonObject.getJSONObject("message").getString("stop_id");
                         buslist = jsonObject.getJSONObject("message").getJSONArray("bus_details");
-                        Log.d("Search_results",nearby_name);
-                        Log.d("Search_results",buslist.toString());
+                        Log.d("Search_results", nearby_name);
+                        Log.d("Search_results", buslist.toString());
                         success = true;
+                    }else  if(jsonObject.getJSONObject("message").getString("msg").equals("6")){
+                            Home home = (Home) getActivity();
+                            home.setprogress(false,"");
+                            Toast.makeText(getActivity().getApplicationContext(),"No busses found!",Toast.LENGTH_LONG).show();
+                        }else if(jsonObject.getJSONObject("message").getString("msg").equals("7")){
+                            Home home = (Home) getActivity();
+                            home.setprogress(false,"");
+                            Toast.makeText(getActivity().getApplicationContext(),"No nearby stop found!",Toast.LENGTH_LONG).show();
+                        } else if(jsonObject.getJSONObject("message").getString("msg").equals("8")){
+                            Home home = (Home) getActivity();
+                            home.setprogress(false,"");
+                            Toast.makeText(getActivity().getApplicationContext(),"Destination not found!",Toast.LENGTH_LONG).show();
+                        } else if(jsonObject.getJSONObject("message").getString("msg").equals("9")){
+                            Home home = (Home) getActivity();
+                            home.setprogress(false,"");
+                            Toast.makeText(getActivity().getApplicationContext(),"Route not found",Toast.LENGTH_LONG).show();
+                        }
 
                     } catch (JSONException e) {
-                        e.printStackTrace();
+
                     }
                     req=true;
                 }
@@ -364,6 +392,9 @@ public class home extends Fragment implements LocationListener{
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.i("Onerror", "volley");
+                    Home home = (Home) getActivity();
+                    home.setprogress(false,"");
+                    Toast.makeText(getActivity().getApplicationContext(),"Network error!",Toast.LENGTH_LONG).show();
                     req=true;
                 }
             });
@@ -381,7 +412,9 @@ public class home extends Fragment implements LocationListener{
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            loadparallax();
+            Log.d("Search_over",success.toString());
+            loadparallax(success);
+
         }
 
         @Override
@@ -406,16 +439,10 @@ public class home extends Fragment implements LocationListener{
             }
 
             Location location = locationManager.getLastKnownLocation(provider);
-            if(location==null){
-                Log.d("Location","Couldn't get location");
-            }
-            else {
-                Log.d("Location","Got location");
-            }
-
             if(location==null) {
-                user_lat = 12.988683;
-                user_lon = 80.229527;
+                Toast.makeText(getContext().getApplicationContext(),"Couldnt detect location",Toast.LENGTH_LONG).show();
+                dest = "no";
+                return false;
             }else{
                 user_lat = location.getLatitude();
                 user_lon = location.getLongitude();
@@ -474,7 +501,9 @@ public class home extends Fragment implements LocationListener{
             if(success){
                 search task = new search();
                 task.execute((Void)null);
-            }else{
+            }else if(!dest.equals("no")){
+                Home home = (Home) getActivity();
+                home.setprogress(false,"");
                 Toast.makeText(getActivity().getApplicationContext(),"Destination not found",Toast.LENGTH_LONG).show();
             }
         }
