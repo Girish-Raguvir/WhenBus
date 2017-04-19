@@ -5,6 +5,10 @@
 - Can track buses
 - Navigate through bus routes
 
+# Project Website
+
+	http://cs3410-whenbus.herokuapp.com/ (Best when viewed in Google Chrome)
+	
 How to Deploy :
 ===============
 
@@ -12,22 +16,22 @@ Run script to load the data into the DBMS:
 	
 	./load_data.sh
 
-Then deploy via heroku(runs on port 5000 for below command)
+To run server on localhost: (runs, by default, on port 3000)
+
+	cd server && node index.js
+	
+Alternatively, to deploy via heroku: 
 	
 	heroku local web
-	#Alternately
-	# cd server && node index.js
-	  
-
-Run APIDOC/JSDoc Using :
+	
+To update API Doc/JSDoc use:
 
 	./create_doc.sh
 
-APIDOC found at:
+All docs can be found at:
 
-	https://cs3410-whenbus.herokuapp.com/api
-	https://cs3410-whenbus.herokuapp.com/docs
+	http://cs3410-whenbus.herokuapp.com/
 
-To  run units test run
+To  run units test run:
 	
 	./run_test.sh
