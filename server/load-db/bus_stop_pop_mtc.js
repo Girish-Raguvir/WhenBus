@@ -65,8 +65,8 @@ stps.push(new stop_model({
 stps.push(new stop_model({
 	stop_id: "18",
 	stop_name: "CRC Back2",
-	gps_lat: 12.987826, 
-	gps_lon: 80.231165
+	gps_lat: 12.988332, 
+	gps_lon: 80.230026
 }));
 
 stps.push(new stop_model({
